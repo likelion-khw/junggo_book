@@ -30,65 +30,24 @@
     <div class="col-xs-12 col-sm-8 col-md-8">
       
       <div class="row">
+        <% Book.all.reverse_each do |book| %>
         <div class="col-md-3 col-sm-4 col-xs-6">
-    			<a href="/deal/view">
+    			<a href="/deal/view/<%=book.id%>">
     			  
     			<div class="panel panel-default">
             <div class="panel-body" style="background-image:URL(%=meet.file%>);height:150px;background-size:contain">
              
             </div>
             <div class="panel-footer">
-              <h4 class="font-hanna">책</h4>
+              <h4 class="font-hanna"><%=book.book_title%></h4>
             </div>
           </div>
     			</a>
     		</div><!--/col-lg-4 -->
-    		
-    		<div class="col-md-3 col-sm-4 col-xs-6">
-    			<a href="/home/view?id=%=meet.id%>">
-    			  
-    			<div class="panel panel-default">
-            <div class="panel-body" style="background-image:URL(%=meet.file%>);height:150px;background-size:contain">
-             
-            </div>
-            <div class="panel-footer">
-              <h4 class="font-hanna">책</h4>
-            </div>
-          </div>
-    			</a>
-    		</div><!--/col-lg-4 -->
-    		
-    		<div class="col-md-3 col-sm-4 col-xs-6">
-    			<a href="/home/view?id=%=meet.id%>">
-    			  
-    			<div class="panel panel-default">
-            <div class="panel-body" style="background-image:URL(%=meet.file%>);height:150px;background-size:contain">
-             
-            </div>
-            <div class="panel-footer">
-              <h4 class="font-hanna">책</h4>
-            </div>
-          </div>
-    			</a>
-    		</div><!--/col-lg-4 -->
-    		
-    		<div class="col-md-3 col-sm-4 col-xs-6">
-    			<a href="/home/view?id=%=meet.id%>">
-    			  
-    			<div class="panel panel-default">
-            <div class="panel-body" style="background-image:URL(%=meet.file%>);height:150px;background-size:contain">
-             
-            </div>
-            <div class="panel-footer">
-              <h4 class="font-hanna">책</h4>
-            </div>
-          </div>
-    			</a>
-    		</div><!--/col-lg-4 -->
-      </div>
+    		<%end%>
 
-      
+      </div>
     </div>
-  </div>
   
+  </div>
 </div>

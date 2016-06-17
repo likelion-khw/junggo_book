@@ -7,7 +7,7 @@
       <div class="panel panel-default font-hannna">
         <div class="panel-body">
           <h2 align="center">
-            아두이노 [약 66.6% 할인]
+            [<%=@book.book_category%>] <%=@book.book_title%> [약 <%=@percent%>% 절약]
           </h2>
               
             
@@ -30,8 +30,8 @@
             <div class="col-md-9 col-sm-9 col-xs-12">
               <br>
               <br>
-              <h4><del><strong> 정가 30000원 </strong></del></h4>
-              <h3><strong>판매가 <span class="label label-warning">10000원</span></strong></h3>
+              <h4><del><strong> 정가 <%=@book.book_price%>원 </strong></del></h4>
+              <h3><strong>판매가 <span class="label label-warning"><%=@book.sell_price%>원</span></strong></h3>
               <table class="table">
                 <thead>
                   <tr>
@@ -41,19 +41,19 @@
                 <tbody>
                   <tr>
                     <th>책 이름</th>
-                    <td>아두이노</td>
+                    <td><%=@book.book_title%></td>
                   </tr>
                   <tr>
                     <th>지은이</th>
-                    <td>아두이노 만든사람</td>
+                    <td><%=@book.book_writer%></td>
                   </tr>
                   <tr>
                     <th>출판사</th>
-                    <td>아두이노 회사</td>
+                    <td>입력안함</td>
                   </tr>
                   <tr>
                     <th>정가</th>
-                    <td>얼마</td>
+                    <td><%=@book.book_price%></td>
                   </tr>
                 </tbody>
               </table>
@@ -69,22 +69,22 @@
                     <th width="300px">사용감<br>
                         <small>(겉표지, 구김정도, 젖은흔적 등 전체적인 상태)</small>
                     </th>
-                    <td>조금있음</td>
+                    <td><%=@book.out_state%></td>
                   </tr>
                   <tr>
                     <th>필기상태<br>
                         <small>(책 안의 메모, 낙서 등의 상태)</small>
                     </th>
-                    <td>조금 있음</td>
+                    <td><%=@book.in_state%></td>
                   </tr>
                   <tr>
                     <th>분권유무</th>
-                    <td>없음</td>
+                    <td><%=@book.saperate%></td>
                   </tr>
                   
                   <tr>
                     <th>판매자 상세설명</th>
-                    <td>조금 찢어져있습니다</td>
+                    <td>입력안함</td>
                   </tr>
                   
                 </tbody>

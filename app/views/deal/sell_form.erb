@@ -1,4 +1,4 @@
-<form action="/home/mojib_action" method="POST" enctype="multipart/form-data">	
+<form action="/deal/sell_action" method="POST" enctype="multipart/form-data">	
 <div class="content-background">
   <div class="container">
     
@@ -18,23 +18,34 @@
               
               <div class="col-xs-12 col-sm-10 col-md-10"> 
               
+                
+                <div class="input-group">
+                  <span class="input-group-addon" id="basic-addon1">책 구분</span>
+                  <select name="book_category" class="form-control" required>
+                    <option value="전공">전공</option>
+                    <option value="교양">교양</option>
+                    <option value="기타">기타</option>
+                  </select>
+                </div>
+                
+                <br>
                 <div class="input-group">
                   <span class="input-group-addon" id="basic-addon1">책 제목</span>
-                  <input class="form-control" type="text" name="name" required></input>
+                  <input class="form-control" type="text" name="book_title" required></input>
                 </div>
                 
                 <br>
                 
                 <div class="input-group">
                   <span class="input-group-addon" id="basic-addon1">지은이</span>
-                  <input class="form-control" type="text" name="name" required></input>
+                  <input class="form-control" type="text" name="book_writer" required></input>
                 </div>
                 
                 <br>
                 
                 <div class="input-group">
                   <span class="input-group-addon" id="basic-addon1">정가</span>
-                  <input class="form-control" type="number" name="price" required></input>
+                  <input class="form-control" type="number" name="book_price" min="0" max="1000000" onfocusout="Book_price(this.value)" required></input>
                 </div>
                 
               </div><!--col-md-4-->
@@ -47,17 +58,17 @@
               <p align="left">수업 정보를 입력하면 구매자들이 더 쉽게 접근할 수 있으며, 빠른 판매가 가능합니다.<br>
               작성하시기를 권장합니다.</p>
               <div class="col-xs-12 col-sm-10 col-md-10"> 
-              
+                
                 <div class="input-group">
                   <span class="input-group-addon" id="basic-addon1">수업명</span>
-                  <input class="form-control" type="text" name="name" ></input>
+                  <input class="form-control" type="text" name="class" ></input>
                 </div>
                 
                 <br>
                 
                 <div class="input-group">
                   <span class="input-group-addon" id="basic-addon1">교수님 성함</span>
-                  <input class="form-control" type="text" name="name"></input>
+                  <input class="form-control" type="text" name="teacher"></input>
                 </div>
                 
                 <br>
@@ -81,13 +92,13 @@
                       </div>
                       <div class="panel-body">
                         <div class="radio">
-                          <label><input type="radio" name="optradio">매우 많음</label>
+                          <label><input type="radio" name="out_state" value="매우 많음" onclick="Out_state(this.value)" required>매우 많음</label>
                         </div>
                         <div class="radio">
-                          <label><input type="radio" name="optradio">조금 있음</label>
+                          <label><input type="radio" name="out_state" value="조금 있음" onclick="Out_state(this.value)" >조금 있음</label>
                         </div>
                         <div class="radio">
-                          <label><input type="radio" name="optradio">거의 없음</label>
+                          <label><input type="radio" name="out_state" value="거의 없음" onclick="Out_state(this.vale)" >거의 없음</label>
                         </div>
                       </div>
                     </div>
@@ -100,14 +111,14 @@
                         <h3 class="panel-title"><strong>필기 상태</strong><br><h5>책 안의 메모, 낙서 등의 상태</h5></h3>
                       </div>
                       <div class="panel-body">
-                        <div class="radio">
-                          <label><input type="radio" name="optradio">매우 많음</label>
+                        <div class="radio"> <!--정가에 곱해서 가격 책정하므로 비율로 나타냄!-->
+                          <label><input type="radio" name="in_state" value="매우 많음" onclick="In_state(this.vale)" required>매우 많음</label>
                         </div>
                         <div class="radio">
-                          <label><input type="radio" name="optradio">조금 있음</label>
+                          <label><input type="radio" name="in_state" value="조금 있음" onclick="In_state(this.vale)">조금 있음</label>
                         </div>
                         <div class="radio">
-                          <label><input type="radio" name="optradio">거의 없음</label>
+                          <label><input type="radio" name="in_state" value="거의 없음" onclick="In_state(this.vale)">거의 없음</label>
                         </div>
                       </div>
                     </div>
@@ -116,14 +127,14 @@
                   <div class="col-xs-12 col-sm-4 col-md-4">
                     <div class="panel panel-default">
                       <div class="panel-heading">
-                        <h3 class="panel-title">분권유무</h3>
+                        <h3 class="panel-title"><strong>분권유무</strong></h3>
                       </div>
                       <div class="panel-body">
                         <div class="radio">
-                          <label><input type="radio" name="optradio">분권 함</label>
+                          <label><input type="radio" name="saperate" value="분권함" onclick="Saparate(this.vale)" required>분권함</label>
                         </div>
                         <div class="radio">
-                          <label><input type="radio" name="optradio">분권하지 않음</label>
+                          <label><input type="radio" name="saperate" value="분권하지 않음" onclick="Saparate(this.vale)" >분권하지 않음</label>
                         </div>
                       </div>
                     </div>
@@ -144,14 +155,14 @@
               <div class="col-xs-8 col-sm-10 col-md-10" > 
                 <div class="input-group">
                   <span class="input-group-addon" id="basic-addon1">중고 책방 추천 가격</span>
-                  <input class="form-control" type="number" name="name" disabled></input>
+                  <input class="form-control" type="number" id="recommend_price" value="0" disabled></input>
                 </div>
                 
                 <br>
                 
                 <div class="input-group">
                   <span class="input-group-addon" id="basic-addon1">사용자 판매 가격</span>
-                  <input class="form-control" type="number" name="name" required></input>
+                  <input class="form-control" type="number" name="sell_price" min="0" max="1000000" required></input>
                 </div>
                 
               </div><!--col-md-4-->
@@ -163,7 +174,7 @@
           </div>
           
           <div class="checkbox">
-            <label><input type="checkbox" name="optradio">문자 알림을 받겠습니다.</label>
+            <label><input type="checkbox" name="message_alert" value="send">문자 알림을 받겠습니다.</label>
           </div>
           
           <button type="submit" class="btn btn-info btn-lg font-hanna">판매 등록</button>
@@ -173,3 +184,80 @@
   </div>
 </div>
 </form>
+
+<script>
+var book_price=0; //정가
+var out_state =0;
+var in_state=0;
+var saperate=0;
+
+function Book_price(price) {
+  // book_price = document.getElementsByName('book_price').value;
+  book_price = price;
+  
+  // $('#recommend_price').val(book_price);
+  
+  // alert(document.getElementsByName("recommend_price").innerText) ;
+  // alert(book_price);
+  // var a = document.getElementsByName('recommend_price')
+  // a.value = book_price;
+  // alert(price);
+}
+
+if book_price
+{
+  var out_per;
+  var in_per;
+  var sep_per;
+  
+  var result;
+  
+  switch (out_state){
+    case "분권함" :
+      out_per = 0.6;
+      break;
+    case "분권하지 않음" :
+      out_per = 0.8;
+      break;
+    case "거의 없음" :
+      out_per = 1.0;
+      break;
+  }
+  
+  switch (in_state){
+    case "매우 많음" :
+      in_per = 0.6;
+      break;
+    case "조금 있음" :
+      in_per = 0.8;
+      break;
+    case "거의 없음" :
+      in_per = 1.0;
+      break;
+  }
+  
+  switch (seperate){
+    case "분권함" :
+      sep_per = 0.6;
+      break;
+    case "분권하지 않음" :
+      sep_per = 1.0;
+      break;
+  }
+  
+  result = book_price * out_per * in_per * sep_per ; 
+  
+  $('#recommend_price').val(result);
+}
+// function getCheckedRadioValue(radioGroupName) {
+//   var rads = document.getElementsByName(radioGroupName),
+//       i;
+//   for (i=0; i < rads.length; i++)
+//       if (rads[i].checked)
+//           return rads[i].value;
+//   return null; // or undefined, or your preferred default for none checked
+// }
+
+
+// alert($("input[name=out_state]:checked").val();
+</script>

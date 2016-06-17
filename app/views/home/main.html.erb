@@ -40,51 +40,23 @@
         <div id="example" class="carousel slide" data-ride="carousel">
   <div class="carousel-inner">
     <ul class="row item active">
+      <% Book.all.each do |book|%>
       <li>
         <div class="col-md-3 col-sm-4 col-xs-6">
-    			<a href="/home/view?id=%=meet.id%>">
+    			<a href="/deal/view/<%=book.id%>">
     			  
     			<div class="panel panel-default">
             <div class="panel-body" style="background-image:URL(%=meet.file%>);height:150px;background-size:contain">
              
             </div>
             <div class="panel-footer">
-              <h4 class="font-hanna">책</h4>
+              <h4 class="font-hanna"><%=book.book_title%></h4>
             </div>
           </div>
     			</a>
     		</div><!--/col-lg-4 -->
       </li>
-      <li>
-        <div class="col-md-3 col-sm-4 col-xs-6">
-    			<a href="/home/view?id=%=meet.id%>">
-    			  
-    			<div class="panel panel-default">
-            <div class="panel-body" style="background-image:URL(%=meet.file%>);height:150px;background-size:contain">
-             
-            </div>
-            <div class="panel-footer">
-              <h4 class="font-hanna">책</h4>
-            </div>
-          </div>
-    			</a>
-    		</div><!--/col-lg-4 -->
-      </li>
-      <li>
-        <div class="col-md-3 col-sm-4 col-xs-6">
-    			<a href="/home/view?id=%=meet.id%>">
-    			  
-    			<div class="panel panel-default">
-            <div class="panel-body" style="background-image:URL(%=meet.file%>);height:150px;background-size:contain">
-             
-            </div>
-            <div class="panel-footer">
-              <h4 class="font-hanna">책</h4>
-            </div>
-          </div>
-    			</a>
-    		</div><!--/col-lg-4 -->
-      </li>
+      <%end%>
     </ul>
     <ul class="row item">
       <li>
