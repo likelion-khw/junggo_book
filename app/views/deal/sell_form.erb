@@ -1,0 +1,175 @@
+<form action="/home/mojib_action" method="POST" enctype="multipart/form-data">	
+<div class="content-background">
+  <div class="container">
+    
+    <div class="panel panel-default" style="margin-top:50px">
+      <div class="panel-body">
+        <div align="center" style="padding:50px">
+          <h1 class="font-hanna">책 판매 신청서
+          <br/></h1>
+          
+          
+          <hr>
+          
+          
+          <div class="container font-nanum">
+            <div class="row mt centered">
+            <strong><p align="left">1. 책 기본 정보 입력 (필수)</p></strong>
+              
+              <div class="col-xs-12 col-sm-10 col-md-10"> 
+              
+                <div class="input-group">
+                  <span class="input-group-addon" id="basic-addon1">책 제목</span>
+                  <input class="form-control" type="text" name="name" required></input>
+                </div>
+                
+                <br>
+                
+                <div class="input-group">
+                  <span class="input-group-addon" id="basic-addon1">지은이</span>
+                  <input class="form-control" type="text" name="name" required></input>
+                </div>
+                
+                <br>
+                
+                <div class="input-group">
+                  <span class="input-group-addon" id="basic-addon1">정가</span>
+                  <input class="form-control" type="number" name="price" required></input>
+                </div>
+                
+              </div><!--col-md-4-->
+             
+            </div>
+            <br><br>
+            
+            <div class="row mt centered">
+            <strong><p align="left">2. 수업 정보 입력 (선택)</p></strong>
+              <p align="left">수업 정보를 입력하면 구매자들이 더 쉽게 접근할 수 있으며, 빠른 판매가 가능합니다.<br>
+              작성하시기를 권장합니다.</p>
+              <div class="col-xs-12 col-sm-10 col-md-10"> 
+              
+                <div class="input-group">
+                  <span class="input-group-addon" id="basic-addon1">수업명</span>
+                  <input class="form-control" type="text" name="name" ></input>
+                </div>
+                
+                <br>
+                
+                <div class="input-group">
+                  <span class="input-group-addon" id="basic-addon1">교수님 성함</span>
+                  <input class="form-control" type="text" name="name"></input>
+                </div>
+                
+                <br>
+              
+                
+              </div><!--col-md-4-->
+             
+            </div>
+            <br><br>
+            
+            <div class="row mt centered">
+            <strong><p align="left">3. 책 상태 체크 (필수)</p></strong>
+              
+              <div class="col-xs-12 col-sm-10 col-md-10"> 
+                <div class="row mt centered">
+                  
+                  <div class="col-xs-12 col-sm-4 col-md-4">
+                    <div class="panel panel-default">
+                      <div class="panel-heading">
+                        <h3 class="panel-title"><strong>사용감</strong><br><h5>겉표지, 구김정도, 젖은흔적 등 전체적인 상태</h5></h3>
+                      </div>
+                      <div class="panel-body">
+                        <div class="radio">
+                          <label><input type="radio" name="optradio">매우 많음</label>
+                        </div>
+                        <div class="radio">
+                          <label><input type="radio" name="optradio">조금 있음</label>
+                        </div>
+                        <div class="radio">
+                          <label><input type="radio" name="optradio">거의 없음</label>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                
+                
+                  <div class="col-xs-12 col-sm-4 col-md-4">
+                    <div class="panel panel-default">
+                      <div class="panel-heading">
+                        <h3 class="panel-title"><strong>필기 상태</strong><br><h5>책 안의 메모, 낙서 등의 상태</h5></h3>
+                      </div>
+                      <div class="panel-body">
+                        <div class="radio">
+                          <label><input type="radio" name="optradio">매우 많음</label>
+                        </div>
+                        <div class="radio">
+                          <label><input type="radio" name="optradio">조금 있음</label>
+                        </div>
+                        <div class="radio">
+                          <label><input type="radio" name="optradio">거의 없음</label>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                
+                  <div class="col-xs-12 col-sm-4 col-md-4">
+                    <div class="panel panel-default">
+                      <div class="panel-heading">
+                        <h3 class="panel-title">분권유무</h3>
+                      </div>
+                      <div class="panel-body">
+                        <div class="radio">
+                          <label><input type="radio" name="optradio">분권 함</label>
+                        </div>
+                        <div class="radio">
+                          <label><input type="radio" name="optradio">분권하지 않음</label>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                
+                
+                <br>
+               
+                </div><!--col-md-4-->
+                
+              </div>
+            </div>
+            <br><br>
+            
+            <div class="row mt centered">
+            <strong><p align="left">4. 가격 책정 (필수)</p></strong>
+              
+              <div class="col-xs-8 col-sm-10 col-md-10" > 
+                <div class="input-group">
+                  <span class="input-group-addon" id="basic-addon1">중고 책방 추천 가격</span>
+                  <input class="form-control" type="number" name="name" disabled></input>
+                </div>
+                
+                <br>
+                
+                <div class="input-group">
+                  <span class="input-group-addon" id="basic-addon1">사용자 판매 가격</span>
+                  <input class="form-control" type="number" name="name" required></input>
+                </div>
+                
+              </div><!--col-md-4-->
+            
+            </div>
+            <br><br>
+            
+            
+          </div>
+          
+          <div class="checkbox">
+            <label><input type="checkbox" name="optradio">문자 알림을 받겠습니다.</label>
+          </div>
+          
+          <button type="submit" class="btn btn-info btn-lg font-hanna">판매 등록</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</form>

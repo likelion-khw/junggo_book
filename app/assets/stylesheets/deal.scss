@@ -1,0 +1,32 @@
+// Place all the styles related to the deal controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+.responsive-circle {
+    font-size: 70px;
+    font-weight: 200;
+    margin: 0 auto 20px;
+    width: 70%;
+}
+.responsive-circle::after {
+    border-radius: 50%;
+    content: "";
+    display: block;
+    height: 0;
+    margin-bottom: 20px;
+    padding-bottom: 100%;
+    width: 100%;
+}
+.responsive-circle div {
+    color: white;
+    float: left;
+    line-height: 1em;
+    margin-top: -0.5em;
+    padding-top: 50%;
+    text-align: center;
+    width: 100%;
+}
+
+.nyc-circle::after {
+    background-color: RGB(49,151,251);
+}
