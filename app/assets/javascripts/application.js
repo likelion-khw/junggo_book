@@ -14,7 +14,7 @@
 //= require jquery_ujs
 //= require turbolinks
 //= require_tree .
-
+// 넘어가는거
 var carousels = $('.carousel');
 carousels.each(function() {
   var $obj = $(this);

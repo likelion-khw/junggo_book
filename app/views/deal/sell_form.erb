@@ -45,7 +45,7 @@
                 
                 <div class="input-group">
                   <span class="input-group-addon" id="basic-addon1">정가</span>
-                  <input class="form-control" type="number" name="book_price" min="0" max="1000000" onfocusout="Book_price(this.value)" required></input>
+                  <input class="form-control" type="number" id="book_price" name="book_price" min="0" max="1000000" required></input>
                 </div>
                 
               </div><!--col-md-4-->
@@ -92,13 +92,13 @@
                       </div>
                       <div class="panel-body">
                         <div class="radio">
-                          <label><input type="radio" name="out_state" value="매우 많음" onclick="Out_state(this.value)" required>매우 많음</label>
+                          <label><input type="radio" name="out_state" value="매우 많음" required>매우 많음</label>
                         </div>
                         <div class="radio">
-                          <label><input type="radio" name="out_state" value="조금 있음" onclick="Out_state(this.value)" >조금 있음</label>
+                          <label><input type="radio" name="out_state" value="조금 있음" >조금 있음</label>
                         </div>
                         <div class="radio">
-                          <label><input type="radio" name="out_state" value="거의 없음" onclick="Out_state(this.vale)" >거의 없음</label>
+                          <label><input type="radio" name="out_state" value="거의 없음" >거의 없음</label>
                         </div>
                       </div>
                     </div>
@@ -112,13 +112,13 @@
                       </div>
                       <div class="panel-body">
                         <div class="radio"> <!--정가에 곱해서 가격 책정하므로 비율로 나타냄!-->
-                          <label><input type="radio" name="in_state" value="매우 많음" onclick="In_state(this.vale)" required>매우 많음</label>
+                          <label><input type="radio" name="in_state" value="매우 많음" required>매우 많음</label>
                         </div>
                         <div class="radio">
-                          <label><input type="radio" name="in_state" value="조금 있음" onclick="In_state(this.vale)">조금 있음</label>
+                          <label><input type="radio" name="in_state" value="조금 있음">조금 있음</label>
                         </div>
                         <div class="radio">
-                          <label><input type="radio" name="in_state" value="거의 없음" onclick="In_state(this.vale)">거의 없음</label>
+                          <label><input type="radio" name="in_state" value="거의 없음">거의 없음</label>
                         </div>
                       </div>
                     </div>
@@ -131,10 +131,10 @@
                       </div>
                       <div class="panel-body">
                         <div class="radio">
-                          <label><input type="radio" name="saperate" value="분권함" onclick="Saparate(this.vale)" required>분권함</label>
+                          <label><input type="radio" name="saperate" value="분권함" required>분권함</label>
                         </div>
                         <div class="radio">
-                          <label><input type="radio" name="saperate" value="분권하지 않음" onclick="Saparate(this.vale)" >분권하지 않음</label>
+                          <label><input type="radio" name="saperate" value="분권하지 않음" >분권하지 않음</label>
                         </div>
                       </div>
                     </div>
@@ -156,14 +156,95 @@
                 <div class="input-group">
                   <span class="input-group-addon" id="basic-addon1">중고 책방 추천 가격</span>
                   <input class="form-control" type="number" id="recommend_price" value="0" disabled></input>
+                  <span class="input-group-btn">
+                    <button class="btn btn-default" type="button" data-toggle="collapse" data-target="#table" aria-expanded="false" aria-controls="table">산정 비율 보기</button>
+                  </span>
                 </div>
                 
-                <br>
+                추천가격은 일정한 비율을 적용하여 계산한 값입니다.
+                
+                ( 추천가격 = 사용감 비율 X 필기상태 비율 X 분권 비율 )
+                <br><br>
+                <div class="row collapse" id="table">
+                  <div class="col-xs-12 col-sm-6 col-md-4">
+                    <table class="table table-bordered">
+                      <thead>
+                        <tr>
+                          <th>구분</th>
+                          <th>사용감</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <th scope="row">매우 많음</th>
+                          <td>0.6</td>
+                        </tr>
+                        <tr>
+                          <th scope="row">조금 있음</th>
+                          <td>0.8</td>
+                        </tr>
+                        <tr>
+                          <th scope="row">거의 없음</th>
+                          <td>1.0</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                  
+                  <div class="col-xs-12 col-sm-6 col-md-4">
+                    <table class="table table-bordered">
+                      <thead>
+                        <tr>
+                          <th>구분</th>
+                          <th>필기 상태</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <th scope="row">매우 많음</th>
+                          <td>0.6</td>
+                        </tr>
+                        <tr>
+                          <th scope="row">조금 있음</th>
+                          <td>0.8</td>
+                        </tr>
+                        <tr>
+                          <th scope="row">거의 없음</th>
+                          <td>1.0</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                  
+                  <div class="col-xs-12 col-sm-6 col-md-4">
+                    <table class="table table-bordered">
+                      <thead>
+                        <tr>
+                          <th>구분</th>
+                          <th>분권 유무</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <th scope="row">분권함</th>
+                          <td>0.6</td>
+                        </tr>
+                        <tr>
+                          <th scope="row">분권하지 않음</th>
+                          <td>1.0</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+                
                 
                 <div class="input-group">
                   <span class="input-group-addon" id="basic-addon1">사용자 판매 가격</span>
-                  <input class="form-control" type="number" name="sell_price" min="0" max="1000000" required></input>
+                  <input class="form-control" type="number" id="sell_price" name="sell_price" min="0" max="1000000" required></input>
                 </div>
+                
+                <input type="checkbox" name="apply" value="ok">추천가격을 적용하겠습니다.</label>
                 
               </div><!--col-md-4-->
             
@@ -186,69 +267,76 @@
 </form>
 
 <script>
-var book_price=0; //정가
-var out_state =0;
-var in_state=0;
-var saperate=0;
+var book_price; //정가
+var out_state = 1.0;
+var in_state = 1.0;
+var saperate = 1.0;
+var result;
 
-function Book_price(price) {
-  // book_price = document.getElementsByName('book_price').value;
-  book_price = price;
-  
-  // $('#recommend_price').val(book_price);
-  
-  // alert(document.getElementsByName("recommend_price").innerText) ;
-  // alert(book_price);
-  // var a = document.getElementsByName('recommend_price')
-  // a.value = book_price;
-  // alert(price);
-}
 
-if book_price
-{
-  var out_per;
-  var in_per;
-  var sep_per;
-  
-  var result;
-  
-  switch (out_state){
-    case "분권함" :
-      out_per = 0.6;
-      break;
-    case "분권하지 않음" :
-      out_per = 0.8;
-      break;
-    case "거의 없음" :
-      out_per = 1.0;
-      break;
-  }
-  
-  switch (in_state){
-    case "매우 많음" :
-      in_per = 0.6;
-      break;
-    case "조금 있음" :
-      in_per = 0.8;
-      break;
-    case "거의 없음" :
-      in_per = 1.0;
-      break;
-  }
-  
-  switch (seperate){
-    case "분권함" :
-      sep_per = 0.6;
-      break;
-    case "분권하지 않음" :
-      sep_per = 1.0;
-      break;
-  }
-  
-  result = book_price * out_per * in_per * sep_per ; 
-  
-  $('#recommend_price').val(result);
-}
+$(document).ready(function(){
+    $('#book_price').change(function(){ //정가변경시
+        
+          book_price = $(this).val();
+          // alert(book_price);
+          result = book_price * out_state * in_state * saperate;
+          $("#recommend_price").val(result);
+    });
+    
+    $("input[name=out_state]").change(function() {
+        var radioValue = $(this).val();
+  			
+  			if (radioValue == "매우 많음") {
+  				out_state = 0.6;
+  			} else if (radioValue == "조금 있음") {
+  				out_state = 0.8;
+  			} else if (radioValue == "거의 없음") {
+  				out_state = 1.0;
+  			}
+  			
+  			result = book_price * out_state * in_state * saperate;
+        $("#recommend_price").val(result);
+  			
+    });
+    
+    $("input[name=in_state]").change(function() {
+        var radioValue = $(this).val();
+  			
+  			if (radioValue == "매우 많음") {
+  				in_state = 0.6;
+  			} else if (radioValue == "조금 있음") {
+  				in_state = 0.8;
+  			} else if (radioValue == "거의 없음") {
+  				in_state = 1.0;
+  			}
+  			
+  			result = book_price * out_state * in_state * saperate;
+        $("#recommend_price").val(result);
+    });
+   
+   $("input[name=saperate]").change(function() {
+        var radioValue = $(this).val();
+  			
+  			if (radioValue == "분권함") {
+  				saperate = 0.6;
+  			} else if (radioValue == "분권하지 않음") {
+  				saperate = 1.0;
+  			} 
+  			
+  			result = book_price * out_state * in_state * saperate;
+        $("#recommend_price").val(result);
+    });
+    
+    // $("input:checkbox[id='ID']").is(":checked") == true : false
+    $("input[name=apply]").change(function() {
+      if ($(this).val() == "ok")
+            $("#sell_price").val(result);
+      else 
+            $("#sell_price").val("");
+    });
+});
+
+
 // function getCheckedRadioValue(radioGroupName) {
 //   var rads = document.getElementsByName(radioGroupName),
 //       i;
@@ -259,5 +347,81 @@ if book_price
 // }
 
 
-// alert($("input[name=out_state]:checked").val();
+
+
+// var book_price=0; //정가
+// var out_state =0;
+// var in_state=0;
+// var saperate=0;
+
+// function Book_price(price) {
+//   alert($('#book_price').val());
+//   // book_price = document.getElementsByName('book_price').value;
+//   // book_price = price;
+//   // alert(book_price);
+//   // // $('#recommend_price').val(book_price);
+  
+//   // alert(document.getElementsByName("recommend_price").innerText) ;
+//   // alert(book_price);
+//   // var a = document.getElementsByName('recommend_price')
+//   // a.value = book_price;
+//   // alert(price);
+// }
+
+// if book_price
+// {
+//   var out_per;
+//   var in_per;
+//   var sep_per;
+  
+//   var result;
+  
+//   switch (out_state){
+//     case "분권함" :
+//       out_per = 0.6;
+//       break;
+//     case "분권하지 않음" :
+//       out_per = 0.8;
+//       break;
+//     case "거의 없음" :
+//       out_per = 1.0;
+//       break;
+//   }
+  
+//   switch (in_state){
+//     case "매우 많음" :
+//       in_per = 0.6;
+//       break;
+//     case "조금 있음" :
+//       in_per = 0.8;
+//       break;
+//     case "거의 없음" :
+//       in_per = 1.0;
+//       break;
+//   }
+  
+//   switch (seperate){
+//     case "분권함" :
+//       sep_per = 0.6;
+//       break;
+//     case "분권하지 않음" :
+//       sep_per = 1.0;
+//       break;
+//   }
+  
+//   result = book_price * out_per * in_per * sep_per ; 
+  
+//   $('#recommend_price').val(result);
+// }
+// function getCheckedRadioValue(radioGroupName) {
+//   var rads = document.getElementsByName(radioGroupName),
+//       i;
+//   for (i=0; i < rads.length; i++)
+//       if (rads[i].checked)
+//           return rads[i].value;
+//   return null; // or undefined, or your preferred default for none checked
+// }
+
+
+// alert($("input[name=out_state]:checked").val());
 </script>
