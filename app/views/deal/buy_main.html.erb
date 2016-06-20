@@ -1,6 +1,7 @@
+<div id="warapper">
 <div align="center" style="height:300px; padding-top:100px;background-size:cover;background-image:URL(https://images.unsplash.com/photo-1427835569204-a54780340cb5?ixlib=rb-0.3.5&q=80&fm=jpg&crop=entropy&s=004e391f8d744a509a9100f69ee96792)">
 
-  <h1 class="font-hanna" style="color:white">구 입 하 기</h1>
+  <h1 class="font-hanna" style="color:white">구 입 하 기<br><h3><span class="label label-warning"><%=@category%></span></h3></h1>
 </div>
 
 
@@ -16,38 +17,99 @@
             <input type="radio" name="category" value="all" autocomplete="off"> 모두
           </label>
           <label class="btn btn-default">
-            <input type="radio" name="category" value="스포츠" autocomplete="off"> 전공
+            <input type="radio" name="category" value="전공" autocomplete="off"> 전공
           </label>
           <label class="btn btn-default">
-            <input type="radio" name="category" value="과팅" autocomplete="off"> 교양
+            <input type="radio" name="category" value="교양" autocomplete="off"> 교양
           </label>
           <label class="btn btn-default">
-            <input type="radio" name="category" value="스터디" autocomplete="off"> 기타
+            <input type="radio" name="category" value="기타" autocomplete="off"> 기타
           </label>
         </div>
     </div>
     
-    <div class="col-xs-12 col-sm-8 col-md-8">
-      
+    <br>
+    
+    <div class="col-xs-12 col-sm-8 col-md-8" id="book_list">
+      <br>
       <div class="row">
-        <% Book.all.reverse_each do |book| %>
-        <div class="col-md-3 col-sm-4 col-xs-6">
-    			<a href="/deal/view/<%=book.id%>">
-    			  
-    			<div class="panel panel-default">
-            <div class="panel-body" style="background-image:URL(%=meet.file%>);height:150px;background-size:contain">
-             
+        <% if @category == "모두" %>
+          <% Book.all.reverse_each do |book| %>
+            <% @percent = ((1 - book.sell_price.to_f/book.book_price.to_f)*100).to_i %>
+          <div class="col-md-3 col-sm-4 col-xs-6">
+      			<a href="/deal/view/<%=book.id%>">
+      			  
+      			<div class="panel panel-default">
+              <div class="panel-body" style="background-image:URL(%=meet.file%>);height:150px;background-size:contain">
+               
+              </div>
+              <div class="panel-footer">
+                <h4 class="font-hanna">[<%=book.book_category%>] <%=book.book_title%> <span class="label label-success"><%=@percent%>% 할인</span></h4>
+              </div>
             </div>
-            <div class="panel-footer">
-              <h4 class="font-hanna"><%=book.book_title%></h4>
+      			</a>
+      		</div><!--/col-lg-4 -->
+      		<%end%>
+      	<%else%>
+      	  <% Book.where("book_category =?",@category).reverse_each do |book| %>
+      	    <% @percent = ((1 - book.sell_price.to_f/book.book_price.to_f)*100).to_i %>
+          <div class="col-md-3 col-sm-4 col-xs-6">
+      			<a href="/deal/view/<%=book.id%>">
+      			  
+      			<div class="panel panel-default">
+              <div class="panel-body" style="background-image:URL(%=meet.file%>);height:150px;background-size:contain">
+               
+              </div>
+              <div class="panel-footer">
+                <h4 class="font-hanna">[<%=book.book_category%>] <%=book.book_title%> <span class="label label-success"><%=@percent%>% 할인</span></h4>
+              </div>
             </div>
-          </div>
-    			</a>
-    		</div><!--/col-lg-4 -->
-    		<%end%>
-
+      			</a>
+      		</div><!--/col-lg-4 -->
+      		<%end%>
+        <%end%>
       </div>
     </div>
   
   </div>
 </div>
+</div>
+<script>
+$(document).ready(function() {
+  $("input[name=category]").change(function() {
+  
+      var category = $(this).val()
+      
+        
+      $.ajax({
+          url:'/deal/buy_main',
+          type:'POST',
+          data: {
+            category: category
+          },
+          success: function(data){
+            alert("전송");
+            // $('#title').html(data);
+            // $( "#warapper" ).load( "/deal/buy_main #title" );
+            
+					 // return false;
+
+            $('#warapper').fadeOut(400).load('/deal/buy_main?category=' + category + '#book_list').fadeIn(400);
+            // $('#title').html(data);
+            // $( "#title" ).load( document.URL +  ' #title');
+            // window.location.reload(true); //전체로드
+              
+          },// end
+          error:function(request,status,error){
+            alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+          }
+      });// end ajax
+      return false;
+        
+  });
+      
+      // alert($(this).val());
+      // window.location.reload(true);
+});
+  
+</script>

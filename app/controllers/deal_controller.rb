@@ -29,6 +29,7 @@ class DealController < ApplicationController
   end
   
   def buy_main
+    @category = params[:category] #카테고리구분
   end
   
   def view
