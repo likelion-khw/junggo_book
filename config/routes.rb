@@ -1,8 +1,6 @@
 Rails.application.routes.draw do
-  get 'deal/sell_main'
-
-  get 'deal/buy_main'
-
+  devise_for :users
+ 
   root 'home#main'
   match ":controller(/:action(/:id))", :via => [:post, :get]
   # The priority is based upon order of creation: first created -> highest priority.
