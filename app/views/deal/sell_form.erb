@@ -7,7 +7,7 @@
         <div align="center" style="padding:50px">
           <h1 class="font-hanna">책 판매 신청서
           <br/></h1>
-          
+          <input type="hidden" name="user_id" value="<%=current_user.id%>">
           
           <hr>
           
@@ -39,6 +39,13 @@
                 <div class="input-group">
                   <span class="input-group-addon" id="basic-addon1">지은이</span>
                   <input class="form-control" type="text" name="book_writer" required></input>
+                </div>
+                
+                <br>
+                
+                <div class="input-group">
+                  <span class="input-group-addon" id="basic-addon1">출판사</span>
+                  <input class="form-control" type="text" name="book_company" required></input>
                 </div>
                 
                 <br>

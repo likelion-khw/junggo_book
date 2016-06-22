@@ -14,8 +14,11 @@
 ActiveRecord::Schema.define(version: 20160621081453) do
 
   create_table "books", force: :cascade do |t|
+    t.string   "status"
+    t.integer  "user_id"
     t.string   "book_title"
     t.string   "book_writer"
+    t.string   "book_company"
     t.integer  "book_price"
     t.string   "book_category"
     t.string   "class_name"

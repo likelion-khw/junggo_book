@@ -69,7 +69,7 @@
         
         <ul class="nav navbar-nav navbar-right">
           <% if current_user%>
-            <li><a href="#"><%=current_user.email%></a></li>
+            <li><a href="/deal/user"><%=current_user.email%></a></li>
             <li><%= link_to "로그아웃", destroy_user_session_path, :method => :delete %></li>
           <%else%>
             <li><a href="/users/sign_in">이미 회원이신가요?</a></li>

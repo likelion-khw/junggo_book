@@ -8,8 +8,14 @@ class DealController < ApplicationController
   
   def sell_action
     book = Book.new
+    
+    book.status = "판매가능"
+    
+    book.user_id = params[:user_id]
+    
     book.book_title = params[:book_title]
     book.book_writer = params[:book_writer]
+    book.book_company = params[:book_company]
     book.book_price = params[:book_price]
     book.book_category = params[:book_category]
       

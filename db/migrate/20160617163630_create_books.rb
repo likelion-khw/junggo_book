@@ -1,8 +1,13 @@
 class CreateBooks < ActiveRecord::Migration
   def change
     create_table :books do |t|
+      t.string :status
+      
+      t.integer :user_id
+      
       t.string :book_title
       t.string :book_writer
+      t.string :book_company
       t.integer :book_price
       t.string :book_category
       

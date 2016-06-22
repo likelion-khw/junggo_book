@@ -1,0 +1,83 @@
+<div class="sidebar-overlay"></div>
+
+<!-- Material sidebar -->
+<aside id="sidebar" class="sidebar sidebar-colored open sidebar-stacked" role="navigation">
+    <!-- Sidebar header -->
+    <div class="sidebar-header header-cover" style="background-image: url(http://2.bp.blogspot.com/-2RewSLZUzRg/U-9o6SD4M6I/AAAAAAAADIE/voax99AbRx0/s1600/14%2B-%2B1%2B%281%29.jpg);">
+        <!-- Top bar -->
+        <div class="top-bar"></div>
+        <!-- Sidebar toggle button -->
+        <button type="button" class="sidebar-toggle" style="display:initial">
+            <span class="sidebar-badge badge-circle">접기</span>
+            <!--<i class="glyphicon glyphicon-menu-left"></i>-->
+        </button>
+        <!-- Sidebar brand image -->
+        <div class="sidebar-image">
+            <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/53474/atom_profile_01.jpg">
+        </div>
+        <!-- Sidebar brand name -->
+        <div class="sidebar-brand">
+            <%=current_user.email%>
+            
+        </div>
+    </div>
+    
+
+    <!-- Sidebar navigation -->
+    <ul class="nav sidebar-nav">
+        
+        <li class="dropdown">
+            <a class="ripple-effect dropdown-toggle" href="#" data-toggle="dropdown">
+                <i class="sidebar-icon md-star"></i>
+                거래 관리
+                <b class="caret"></b>
+            </a>
+            <ul class="dropdown-menu">
+                <li>
+                    <a href="#" tabindex="-1">
+                        구매 관리
+                        <span class="sidebar-badge"><%=Book.where('user_id =?',current_user.id).count%></span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#" tabindex="-1">
+                        판매 관리
+                        <span class="sidebar-badge">0</span>
+                    </a>
+                </li>
+            </ul>
+        </li>
+        
+        <li>
+            <a href="#">
+                <i class="sidebar-icon md-drafts"></i>
+                사용자센터
+            </a>
+        </li>
+        <li class="divider"></li>
+        <li class="dropdown">
+          <li>
+            <a href="#">
+                <i class="sidebar-icon md-inbox"></i>
+                프로필 수정
+            </a>
+          </li>
+          
+          <li>
+            <a href="#">
+                <i class="sidebar-icon md-inbox"></i>
+                로그아웃
+            </a>
+          </li>
+          
+            
+        </li>
+    </ul>
+    <!-- Sidebar divider -->
+    <!-- <div class="sidebar-divider"></div> -->
+    
+    <!-- Sidebar text -->
+    <!--  <div class="sidebar-text">Text</div> -->
+    
+</aside>
+  

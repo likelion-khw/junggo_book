@@ -49,7 +49,7 @@
                   </tr>
                   <tr>
                     <th>출판사</th>
-                    <td>입력안함</td>
+                    <td><%=@book.book_company%></td>
                   </tr>
                   <tr>
                     <th>정가</th>
@@ -99,7 +99,7 @@
                 <tbody>
                   <tr>
                     <th>아이디</th>
-                    <td>ptu_id@naver.com</td>
+                    <td><%=User.find(@book.user_id).email%></td>
                   </tr>
                   <tr>
                     <th>판매권수</th>
