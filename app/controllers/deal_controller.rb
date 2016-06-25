@@ -18,7 +18,13 @@ class DealController < ApplicationController
     book.book_company = params[:book_company]
     book.book_price = params[:book_price]
     book.book_category = params[:book_category]
-      
+    
+    uploader = LoaderUploader.new
+    uploader.store!(params[:pic])
+    
+    book.image_url = uploader.url
+    
+    
     book.class_name = params[:class]
     book.teacher = params[:teacher]
       

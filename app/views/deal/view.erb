@@ -17,13 +17,17 @@
             <div class="col-md-3 col-sm-3 col-xs-12" align="center">
               
               <br>
-              <img src="http://bimage.interpark.com/goods_image/3/7/6/2/211073762g.jpg" style="max-width: 90%; height: auto;">
+              <img src="<%= @book.image_url %>" style="max-width: 90%; height: auto;">
               
               <br>
-              
-              <a href="/deal/buy_user_list"><button class="grow_box btn-block font-hanna" onclick="alert('구입신청을 하셨습니다! 즉시 판매자에게 문자가 전송되었습니다! ')"><h3>구 입 하 기</h3></button></a>
+              <% if current_user%>
+                <a href="/deal/user"><button class="grow_box btn-block font-hanna" onclick="alert('구입신청을 하셨습니다! 즉시 판매자에게 문자가 전송되었습니다! ')"><h3>구 입 하 기</h3></button></a>
+                
+              <%else%>
+              <a href="/users/sign_in"><button class="grow_box btn-block font-hanna" onclick="alert('로그인이 필요한 서비스입니다. 로그인 페이지로 이동합니다! ')"><h3>구 입 하 기</h3></button></a>
+                
+              <%end%>
               (판매자와의 빠른 거래를 위해 사용자의 등록된 휴대폰 번호 정보가 담긴 문자가 전송됩니다.)
-              
             </div>
 
             

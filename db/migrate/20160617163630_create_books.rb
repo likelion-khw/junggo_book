@@ -22,6 +22,9 @@ class CreateBooks < ActiveRecord::Migration
       
       t.string :message_alert
       
+      t.string  :image_url,   :default =>""
+      t.string  :image_thumurl,   :default =>""
+      
       t.timestamps null: false
     end
   end

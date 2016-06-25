@@ -14,7 +14,7 @@
         
         <div class="btn-group-vertical btn-block">
           <label class="btn btn-default">
-            <input type="radio" name="category" value="all" autocomplete="off"> 모두
+            <input type="radio" name="category" value="모든 책" autocomplete="off"> 모두
           </label>
           <label class="btn btn-default">
             <input type="radio" name="category" value="전공" autocomplete="off"> 전공
@@ -33,14 +33,14 @@
     <div class="col-xs-12 col-sm-8 col-md-8" id="book_list">
       <br>
       <div class="row">
-        <% if @category == "모두" %>
+        <% if @category == "모든 책" %>
           <% Book.all.reverse_each do |book| %>
             <% @percent = ((1 - book.sell_price.to_f/book.book_price.to_f)*100).to_i %>
           <div class="col-md-3 col-sm-4 col-xs-6">
       			<a href="/deal/view/<%=book.id%>">
       			  
       			<div class="panel panel-default">
-              <div class="panel-body" style="background-image:URL(%=meet.file%>);height:150px;background-size:contain">
+              <div class="panel-body" style="background-image:URL(<%=book.image_url%>);height:150px;background-size:cover">
                
               </div>
               <div class="panel-footer">
@@ -57,7 +57,7 @@
       			<a href="/deal/view/<%=book.id%>">
       			  
       			<div class="panel panel-default">
-              <div class="panel-body" style="background-image:URL(%=meet.file%>);height:150px;background-size:contain">
+              <div class="panel-body" style="background-image:URL(<%=book.image_url%>);height:150px;background-size:cover">
                
               </div>
               <div class="panel-footer">

@@ -28,8 +28,10 @@ ActiveRecord::Schema.define(version: 20160621081453) do
     t.string   "saperate"
     t.integer  "sell_price"
     t.string   "message_alert"
-    t.datetime "created_at",    null: false
-    t.datetime "updated_at",    null: false
+    t.string   "image_url",     default: ""
+    t.string   "image_thumurl", default: ""
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
   end
 
   create_table "users", force: :cascade do |t|
