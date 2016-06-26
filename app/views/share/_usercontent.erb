@@ -8,11 +8,20 @@
           <div class="well" style="height: 120px; padding: 10px">
             <img src="<%=book.image_url%>" style="float:left;padding-right:20px" width="100" height="100">
             
+            <form action="/share/sel_del" method="post">
             <div style="float: left;">
               <b>책 이름: <%=book.book_title%><br>
               판매가: <%=book.sell_price%>원 (정가대비 <%=@percent%>% 할인)<br>
-              판매등록일: <%= book.created_at.in_time_zone("Asia/Seoul").strftime("%Y/%m/%d %H:%M:%S")%></b>
+              판매등록일: <%= book.created_at.in_time_zone("Asia/Seoul").strftime("%Y/%m/%d %H:%M:%S")%><br>
+              <% if book.status == "거래중" %>
+              구매자: <%=User.find(book.buyer).nickname%></b>
+              <span class="label label-info"><%=book.status%></span>
+              <% else %>
+              <span class="label label-info"><%=book.status%></span>
+              <% end %>
+              <button value="<%=book.id%>" name="sel_del" type="submit" class="btn btn-danger">판매취소</button>
             </div>
+            </form>
             
             <!--<div style="float: right;">-->
             <!--  <div class="alert alert-danger">-->
@@ -35,12 +44,17 @@
           <div class="well" style="height: 120px; padding: 10px">
             <img src="<%=book.image_url%>" style="float:left;padding-right:20px" width="100" height="100">
             
+            <form action="/share/buy_del" method="post">
             <div style="float: left;">
               <b>책 이름: <%=book.book_title%><br>
               구매가: <%=book.sell_price%>원 (정가대비 <%=@percent%>% 할인)<br><br>
               판매자: <%=User.find(book.user_id).nickname%><br>
               거래일: <%=book.updated_at%></b>
+            
+              <button value="<%=book.id%>" name="buy_del" type="submit" class="btn btn-danger">거래취소</button>
+            
             </div>
+            </form>
             
             <!--<div style="float: right;">-->
             <!--  <div class="alert alert-danger">-->
@@ -105,3 +119,4 @@
   <!--모달-->
   <%= render "share/modal.erb" %>
 <%end%>
+

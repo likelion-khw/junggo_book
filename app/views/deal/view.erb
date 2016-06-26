@@ -188,6 +188,7 @@ $(function() {
 $(document).ready(function() {
   $("#buy").click(function() {
       // book_id = $(this).val();
+      <% if @book.status == "판매중" %>
       $.ajax({
           url:'/deal/buyer_update',
           type:'POST',
@@ -204,7 +205,10 @@ $(document).ready(function() {
             alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
           }
       });// end ajax
+      <%else%>
+      alert('이미 거래중인 품목입니다. ');
       return false;
+      <%end%>
         
   });
 });
