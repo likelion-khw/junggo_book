@@ -3,7 +3,17 @@
 		<h1>찾고 계신 책이 있으신가요?</h1>
 		<form class="form-inline" role="form" action="/home/search" method="POST">
 		  <div class="form-group">
-		    <input type="text" style="width:300px"class="form-control" name="search" placeholder="책 이름을 검색해 주세요" required>
+		    <input type="text" style="width:300px"class="form-control" id="search" name="search" placeholder="책 이름을 검색해 주세요" required>
+		    <ul class="list-group" id="book-list" align="left">
+		      <% Book.all.each do |book|%>
+          <li class="list-group-item">
+            <div class="list">
+            [<%=book.book_category%>] <%=book.book_title%>
+            </div>
+          </li>
+          <%end%>
+        </ul>
+        
 		  </div>
 		  <button type="submit" class="btn btn-warning btn-lg">찾기!</button>
 		  <a type="button" class="btn btn-info btn-lg" href="/deal/sell_main">책 판매하기</a>
@@ -22,9 +32,10 @@
 	    10. 검색기능 구현해야 함 -> 지연 >0626완성<br>
 	    11. 판매등록 시간 한국시간으로 -> 0625 변경완료<br>
 	    *12. 전공별 보기 및 판매중, 판매완료 구분 카테고리 추가<br>
-	    *13. 거래 완료시 거래완료 표시 구현하기<br>
-	    14. ajax이용해서 판매자 질문하기->주원오빠 -> 0626 완성 -> 댓글미입력시 에러메시지 출력 ok and table크기조절
-	    15. 로그인 안하고 판매물품 클릭 시 에러뜨는데 이것을 로그인화면으로 옮기게끔 해야함.
+	    *13. 거래 완료시 거래완료 표시 구현하기 -> 현웅오빠<br>
+	    *14. ajax이용해서 판매자 질문하기->주원오빠 -> 0626 완성 -> 댓글미입력시 에러메시지 출력 ok and table크기조절<br>
+	    15. 로그인 안하고 판매물품 클릭 시 에러뜨는데 이것을 로그인화면으로 옮기게끔 해야함. ->지연 수정 0626<br>
+	    16. 로그인 안했을때 상품별 view에서 댓글입력못하게 ->지연 ->0626 완성
 	  </div>
 	</div><!-- conainer -->
 	
@@ -32,11 +43,11 @@
 
 	
 	
-<div>
+<div style="height:100%">
 
-	<div class="row centered">
+	<div class="row centered" style="height:auto; width:100%">
   	
-    	<div class="col-lg-3 col-sm-3 col-xs-12 font-hanna" style="padding:50px;background-size:cover;background-image:URL(http://www.intergate-immigration.com/blog/wp-content/uploads/2015/07/temporary-resident-south-africa-study.jpg)">
+    	<div class="col-lg-3 col-sm-3 col-xs-12 font-hanna" style="height:330px;padding:64px;background-size:cover;background-image:URL(http://www.intergate-immigration.com/blog/wp-content/uploads/2015/07/temporary-resident-south-africa-study.jpg)">
     		
     		<h1>현재 판매중인 책</h1>
     		<p>저렴한 책을 좋은 가격에!</p>
@@ -54,7 +65,7 @@
                             <% Book.all.first(4).each do |book|%>
                             <% @percent = ((1 - book.sell_price.to_f/book.book_price.to_f)*100).to_i %>
                       	    
-                              <div class="col-md-3 col-sm-4 col-xs-6" style="height:100%">
+                              <div class="col-md-3 col-sm-4 col-xs-6" style="height:100%; padding-top:30px">
                           			<a href="/deal/view/<%=book.id%>">
                           			  
                           			<div class="panel panel-default">
@@ -76,7 +87,7 @@
                           <div class="item">
                             <% Book.all.offset(4).first(4).each do |book|%>
                       	      <% @percent = ((1 - book.sell_price.to_f/book.book_price.to_f)*100).to_i %>
-                              <div class="col-md-3 col-sm-4 col-xs-6">
+                              <div class="col-md-3 col-sm-4 col-xs-6" style="padding-top:30px">
                           			<a href="/deal/view/<%=book.id%>">
                           			  
                           			<div class="panel panel-default">
@@ -105,17 +116,88 @@
           </div>
       </div>
         
-        
-        
-        
-        
-        
-        
-        
-        
-        
       </div>
 
 	</div><!-- /row -->
 </div><!-- /container -->
   
+<!--<script>-->
+<!--$(document).ready(function() { -->
+<!--    $('#popup').modal('show'); -->
+<!--}); -->
+<!--</script>-->
+  
+<!--<div class="modal fade" id="popup" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">-->
+<!--  <div class="modal-dialog">-->
+<!--    <div class="modal-content">-->
+<!--      <div class="modal-header">-->
+<!--        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>-->
+<!--        <h4 class="modal-title" id="myModalLabel">Modal title</h4>-->
+<!--      </div>-->
+<!--      <div class="modal-body">-->
+<!--        ...-->
+<!--      </div>-->
+<!--      <div class="modal-footer">-->
+<!--        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>-->
+<!--        <button type="button" class="btn btn-primary">Save changes</button>-->
+<!--      </div>-->
+<!--    </div>-->
+<!--  </div>-->
+<!--</div>-->
+
+
+
+<script>
+$(function () {
+    /* BOOTSNIPP FULLSCREEN FIX */
+//    if (window.location == window.parent.location) {
+//        $('#back-to-bootsnipp').removeClass('hide');
+//    }
+//    
+//    
+//    $('[data-toggle="tooltip"]').tooltip();
+//    
+//    $('#fullscreen').on('click', function(event) {
+//        event.preventDefault();
+//        window.parent.location = "http://bootsnipp.com/iframe/4l0k2";
+//    });
+//    $('a[href="#cant-do-all-the-work-for-you"]').on('click', function(event) {
+    //     event.preventDefault();
+    //     $('#cant-do-all-the-work-for-you').modal('show');
+    // })
+    
+    // $('[data-command="toggle-search"]').on('click', function(event) {
+    //     event.preventDefault();
+    //     $(this).toggleClass('hide-search');
+        
+    //     if ($(this).hasClass('hide-search')) {        
+    //         $('.c-search').closest('.row').slideUp(100);
+    //     }else{   
+    //         $('.c-search').closest('.row').slideDown(100);
+    //     }
+    // })
+    
+    $('#book-list').searchable({
+        searchField: '#search',
+        selector: 'li',
+        childSelector: '.list',
+        show: function( elem ) {
+            elem.slideDown(100);
+        },
+        hide: function( elem ) {
+            elem.slideUp( 100 );
+        }
+    })
+});
+
+
+</script>
+
+<script>
+$(document).ready(function(){
+    $("#search").blur({
+      // alert("dkdk");
+      $(".list-group").hide();
+    });
+});
+</script>
