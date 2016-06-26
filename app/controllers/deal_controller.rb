@@ -9,7 +9,7 @@ class DealController < ApplicationController
   def sell_action
     book = Book.new
     
-    book.status = "판매가능"
+    book.status = "판매중"
     
     book.user_id = params[:user_id]
     
@@ -37,16 +37,55 @@ class DealController < ApplicationController
     book.message_alert = params[:message_alert]
     book.save
     
-    redirect_to '/'
+    redirect_to :action => "user", :menu => "판매"
+    
   end
   
   def buy_main
     @category = params[:category] #카테고리구분
+    # @list = Book.order('created_at DESC').page(params[:page]).per_page(3)
+    # @list = Book.paginate(page: params[:page], per_page: 3).order(created_at: :desc)
+    # Book.paginate(:page => params[:page], :per_page => 3)
+    # @list = Book.paginate(:page => params[:page], :per_page => 3).order("id desc")
+    # @list = Book.where(:published => true).paginate(:page => params[:page]).order('id DESC')
   end
   
   def view
     @book = Book.find(params[:id])
     @percent = ((1 - @book.sell_price.to_f/@book.book_price.to_f)*100).to_i
+    # @replys = Reply.all
+
+    
+  end
+  
+  def reply
+    
+      reply = Reply.new
+      reply.content = params[:contents]
+      reply.user_id = current_user.id
+      reply.book_id = params[:book_id]
+      
+      if reply.save
+        redirect_to :back
+      else 
+        render :text => reply.errors.messages[:contents].first
+      
+      end
+      
+  end
+  
+  
+  def buyer_update #구입버튼 누를시
+    @update = Book.find(params[:book_id])
+    @update.buyer = params[:buyer]
+    @update.status = params[:status]
+    @update.save
+    
+    render :nothing => true
+    
+  end
+  
+  def user
   end
   
 end

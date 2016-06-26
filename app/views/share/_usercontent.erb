@@ -1,0 +1,107 @@
+<% if @menu=="판매"%>
+  <input type="text" name="search-items" class="form-control" id="contact-list-search" placeholder="Search Items" autocomplete="off">
+    <ul class="list-group" id="contact-list">
+      <li class="list-group-item">
+       <% Book.where('user_id =?',current_user.id).each do |book|%>
+         <% @percent = ((1 - book.sell_price.to_f/book.book_price.to_f)*100).to_i %>
+        
+          <div class="well" style="height: 120px; padding: 10px">
+            <img src="<%=book.image_url%>" style="float:left;padding-right:20px" width="100" height="100">
+            
+            <div style="float: left;">
+              <b>책 이름: <%=book.book_title%><br>
+              판매가: <%=book.sell_price%>원 (정가대비 <%=@percent%>% 할인)<br>
+              판매등록일: <%= book.created_at.in_time_zone("Asia/Seoul").strftime("%Y/%m/%d %H:%M:%S")%></b>
+            </div>
+            
+            <!--<div style="float: right;">-->
+            <!--  <div class="alert alert-danger">-->
+            <!--    Not Available.-->
+            <!--  </div>-->
+            <!--</div>-->
+            
+          </div>
+        <%end%>
+    </li>
+  </ul>
+  
+<% elsif @menu=="구매"%>
+  <input type="text" name="search-items" class="form-control" id="contact-list-search" placeholder="Search Items" autocomplete="off">
+    <ul class="list-group" id="contact-list">
+      <li class="list-group-item">
+       <% Book.where('buyer =?',current_user.id).each do |book|%>
+         <% @percent = ((1 - book.sell_price.to_f/book.book_price.to_f)*100).to_i %>
+        
+          <div class="well" style="height: 120px; padding: 10px">
+            <img src="<%=book.image_url%>" style="float:left;padding-right:20px" width="100" height="100">
+            
+            <div style="float: left;">
+              <b>책 이름: <%=book.book_title%><br>
+              구매가: <%=book.sell_price%>원 (정가대비 <%=@percent%>% 할인)<br><br>
+              판매자: <%=User.find(book.user_id).nickname%><br>
+              거래일: <%=book.updated_at%></b>
+            </div>
+            
+            <!--<div style="float: right;">-->
+            <!--  <div class="alert alert-danger">-->
+            <!--    Not Available.-->
+            <!--  </div>-->
+            <!--</div>-->
+            
+          </div>
+        <%end%>
+    </li>
+  </ul>
+  
+<% elsif @menu=="프로필"%>
+  <div class="row">
+    <div class="col-md-10 col-sm-8 col-xs-12">
+      <div class="panel panel-default">
+      
+      	<!--<div class="panel-body">-->
+      		
+      		<table class="table">
+      			<tbody>
+      				<tr>
+      					<th>이메일</th>
+      					<td><%=current_user.email%></td>
+      				</tr>
+      				
+      				<tr>
+      					<th>닉네임</th>
+      					<td><%=current_user.nickname%></td>
+      				</tr>
+      				
+      				<tr>
+      					<th>휴대폰 번호</th>
+      					<td><%=current_user.phone%></td>
+      				</tr>
+      				
+      				<tr>
+      					<th>학과</th>
+      					<td><%=current_user.major%></td>
+      				</tr>
+      				
+      				<tr>
+      					<th>이름</th>
+      					<td><%=current_user.name%></td>
+      				</tr>
+      				
+      			</tbody>
+      		</table>
+      	<!--</div>-->
+      </div>
+    </div>
+    
+    <div class="col-md-2 col-sm-4 col-xs-12">
+      <a href="#edit_info" data-toggle="modal" class="btn btn-success btn-lg btn-block font-hanna">기본정보 수정</a>
+      <br>
+      <a href="#edit_password" data-toggle="modal" class="btn btn-primary btn-lg btn-block font-hanna">비밀번호 변경</a>
+      <br>
+      <a href="#destroy_user" data-toggle="modal" class="btn btn-danger btn-lg btn-block font-hanna">회원 탈퇴</a>
+    </div>
+  </div>
+  
+  <!--모달-->
+  <%= render "share/modal.erb" %>
+<%end%>

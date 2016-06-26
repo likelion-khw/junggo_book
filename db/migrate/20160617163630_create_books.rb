@@ -25,6 +25,7 @@ class CreateBooks < ActiveRecord::Migration
       t.string  :image_url,   :default =>""
       t.string  :image_thumurl,   :default =>""
       
+      t.integer :buyer
       t.timestamps null: false
     end
   end

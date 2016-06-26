@@ -7,7 +7,7 @@
       <div class="panel panel-default font-hannna">
         <div class="panel-body">
           <h2 align="center">
-            [<%=@book.book_category%>] <%=@book.book_title%> <span class="label label-success"><%=@percent%>% 할인</span>
+            [<%=@book.book_category%>] <%=@book.book_title%> <span class="label label-success"><%=@percent%>% 할인</span> <span class="label label-info"><%=@book.status%></span>
           </h2>
               
             
@@ -21,7 +21,7 @@
               
               <br>
               <% if current_user%>
-                <a href="/deal/user"><button class="grow_box btn-block font-hanna" onclick="alert('구입신청을 하셨습니다! 즉시 판매자에게 문자가 전송되었습니다! ')"><h3>구 입 하 기</h3></button></a>
+                <button id="buy" class="grow_box btn-block font-hanna"><h3>구 입 하 기</h3></button>
                 
               <%else%>
               <a href="/users/sign_in"><button class="grow_box btn-block font-hanna" onclick="alert('로그인이 필요한 서비스입니다. 로그인 페이지로 이동합니다! ')"><h3>구 입 하 기</h3></button></a>
@@ -58,6 +58,10 @@
                   <tr>
                     <th>정가</th>
                     <td><%=@book.book_price%></td>
+                  </tr>
+                   <tr>
+                    <th>등록 일시</th>
+                    <td><%= @book.created_at.in_time_zone("Asia/Seoul").strftime("%Y/%m/%d %H:%M:%S")%></td>
                   </tr>
                 </tbody>
               </table>
@@ -116,32 +120,48 @@
             </div>
           </div>
           
-            
-             <table class="table">
+             
+             <table class="table" id="reply_table">
                 <thead>
                   <tr>
                     <th class="font-hanna" colspan="2"><h4>판매자에게 질문하기</h4></th>
                   </tr>
+                     <colgroup>
+                        <col width="50">
+                        <col width="500">
+                     </colgroup>
                 </thead>
+                
+              
+               <% @book.replies.each do |p| %>
                 <tbody>  
                   <tr>
-                    <th>누구누구</th>
-                    <td>연습문제 풀어져있나요?</td>
+                    <th><%= User.find(p.user_id).nickname %></th>
+                    <td><%= p.content %></td>
                   </tr>
-                  
-                  <tr>
-                    <th colspan="2">
-                      <div class="input-group" style="width:100%">
-                        <input class="form-control" width="100%" type="text" name="reply" required></input>
-                        <span class="input-group-btn">
-                          <button class="btn btn-default" type="button">작성</button>
-                        </span>
-                      </div>
-                    </th>
-                    
-                  </tr>
+               <% end %>
+              
+                 <!--<form action="/deal/reply" method="POST">  -->
+                    <tr>
+                      <th colspan="2">
+                        <div class="input-group" style="width:100%">
+                          <input class="form-control" width="100%" id="whatwrite" type="text" name="contents"placeholder = "댓글을 입력해주세요." required></input>
+                          <input type="hidden" name="book_id" value="<%=@book.id%>">
+                          <input type="hidden" id="user_nickname" value="<%=current_user.nickname%>">
+                          <span class="input-group-btn">
+                            <button value = "reply_id" class="btn btn-default reply_submit" type="submit" >작성</button>
+                          </span>
+                        </div>
+                      </th>
+                      
+                    </tr>
+                  <!--</form>-->
                 </tbody>
+               
+               
+                
               </table>
+             
         </div>
       </div>
     </div>
@@ -149,4 +169,67 @@
   </div>
 </div>
 
+<% if current_user %>
 
+
+
+<script>
+$(function() {
+$(document).ready(function() {
+  $("#buy").click(function() {
+      // book_id = $(this).val();
+      $.ajax({
+          url:'/deal/buyer_update',
+          type:'POST',
+          data: {
+            book_id: <%=@book.id%>,
+            buyer: <%=current_user.id%>,
+            status: "거래중"
+          },
+          success: function(data){
+            alert('구입신청을 하셨습니다! 즉시 판매자에게 문자가 전송됩니다! ');
+            location.replace('/deal/user?menu=구매');
+          },// end
+          error:function(request,status,error){
+            alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+          }
+      });// end ajax
+      return false;
+        
+  });
+});
+  
+  
+  
+ 
+    $(".reply_submit").click(function() {
+      user_nickname = $("#user_nickname").val();
+      // user_nickname = user_nickname.toString();
+      reply_id = this.value;
+      reply_content = $("#whatwrite").val();
+      
+        $.ajax({
+        method: "post",
+        url: "/deal/reply",
+        data: {contents: reply_content,
+               book_id: "<%=@book.id%>"
+            },
+            
+        success: function(){
+          $('#reply_table').find("tr:last").before('<tr><th>'+user_nickname+ '</th><td>' + reply_content + '</td></tr>');
+          // $("#reply_"+ reply_id).append("<td>"+reply_content+"</td>");
+          $("#whatwrite").val("");
+     
+        },
+        
+        error: function(){
+           alert("댓글을 입력해주세요.");
+        }
+          
+        })
+        
+    })  
+    
+});
+</script>
+<%end%>

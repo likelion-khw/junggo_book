@@ -1,6 +1,11 @@
 class DeviseCreateUsers < ActiveRecord::Migration
   def change
     create_table :users do |t|
+      #추가
+      t.string :name,               null: false, default: ""
+      t.string :nickname,           null: false, default: ""
+      t.string :phone,              null: false, default: ""
+      t.string :major,              null: false, default: "" #학과
       ## Database authenticatable
       t.string :email,              null: false, default: ""
       t.string :encrypted_password, null: false, default: ""
@@ -33,7 +38,12 @@ class DeviseCreateUsers < ActiveRecord::Migration
 
       t.timestamps null: false
     end
-
+    
+    add_index :users, :name
+    add_index :users, :nickname,                unique: true
+    add_index :users, :phone,                   unique: true
+    add_index :users, :major
+    
     add_index :users, :email,                unique: true
     add_index :users, :reset_password_token, unique: true
     # add_index :users, :confirmation_token,   unique: true

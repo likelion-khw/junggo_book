@@ -1,73 +1,48 @@
 <div align="center" style="height:300px; padding-top:100px;background-size:cover;background-image:URL(https://images.unsplash.com/photo-1427835569204-a54780340cb5?ixlib=rb-0.3.5&q=80&fm=jpg&crop=entropy&s=004e391f8d744a509a9100f69ee96792)">
 
-  <h1 class="font-hanna" style="color:white">[]에 대한 검색 결과</h1>
+  <h1 class="font-hanna" style="color:white">[<%=@searching_keyword%>]에 대한 검색 결과</h1>
 </div>
 
 
 <div class="font-hanna" style="background-color:lightgray;padding:30px">
   <div class="row">
     
-    
+    <% @list = @search_output_book.page(params[:page])%>
     <div class="col-xs-12 col-sm-12 col-md-12">
       
       <div class="row">
-        <div class="col-md-3 col-sm-4 col-xs-6">
-    			<a href="/deal/view">
-    			  
-    			<div class="panel panel-default">
-            <div class="panel-body" style="background-image:URL(%=meet.file%>);height:150px;background-size:contain">
-             
+        
+        
+        <% @list.reverse_each do |book| %>
+         
+          <% @percent = ((1 - book.sell_price.to_f/book.book_price.to_f)*100).to_i %>
+          <div class="col-md-3 col-sm-4 col-xs-6">
+      			<a href="/deal/view/<%=book.id%>">
+      			  
+      			<div class="panel panel-default">
+              <div class="panel-body" style="background-image:URL(<%=book.image_url%>);height:150px;background-size:cover">
+               
+              </div>
+              <div class="panel-footer">
+                <h4 class="font-hanna">[<%=book.book_category%>] <%=book.book_title%></a> <span class="label label-success"><%=@percent%>% 할인</span> <span class="label label-info"><%=book.status%></span></h4>
+              </div>
             </div>
-            <div class="panel-footer">
-              <h4 class="font-hanna">책</h4>
-            </div>
-          </div>
-    			</a>
-    		</div><!--/col-lg-4 -->
+      			
+      		</div><!--/col-lg-4 -->
+    		<%end%>
     		
-    		<div class="col-md-3 col-sm-4 col-xs-6">
-    			<a href="/home/view?id=%=meet.id%>">
-    			  
-    			<div class="panel panel-default">
-            <div class="panel-body" style="background-image:URL(%=meet.file%>);height:150px;background-size:contain">
-             
-            </div>
-            <div class="panel-footer">
-              <h4 class="font-hanna">책</h4>
-            </div>
-          </div>
-    			</a>
-    		</div><!--/col-lg-4 -->
     		
-    		<div class="col-md-3 col-sm-4 col-xs-6">
-    			<a href="/home/view?id=%=meet.id%>">
-    			  
-    			<div class="panel panel-default">
-            <div class="panel-body" style="background-image:URL(%=meet.file%>);height:150px;background-size:contain">
-             
-            </div>
-            <div class="panel-footer">
-              <h4 class="font-hanna">책</h4>
-            </div>
-          </div>
-    			</a>
-    		</div><!--/col-lg-4 -->
-    		
-    		<div class="col-md-3 col-sm-4 col-xs-6">
-    			<a href="/home/view?id=%=meet.id%>">
-    			  
-    			<div class="panel panel-default">
-            <div class="panel-body" style="background-image:URL(%=meet.file%>);height:150px;background-size:contain">
-             
-            </div>
-            <div class="panel-footer">
-              <h4 class="font-hanna">책</h4>
-            </div>
-          </div>
-    			</a>
-    		</div><!--/col-lg-4 -->
       </div>
-
+      <center>
+        <div class="digg_pagination">
+           <div class="page_info">
+             <!--%= page_entries_info @list %>-->
+           </div>
+           <%= will_paginate @list%>
+         <!--%= will_paginate @list %>-->
+         
+       </div>
+      </center>   
       
     </div>
   </div>

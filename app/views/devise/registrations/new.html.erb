@@ -1,29 +1,128 @@
-<h2>Sign up</h2>
 
-<%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
-  <%= devise_error_messages! %>
-
-  <div class="field">
-    <%= f.label :email %><br />
-    <%= f.email_field :email, autofocus: true %>
+<div class="container">
+  <div class="row">
+    <div class="col-md-3 col-sm-2 col-xs-1"></div>
+    
+    <div class="col-md-6 col-sm-8 col-xs-10" style="padding-top:100px">
+      <div class="panel panel-primary">
+        <div class="panel-heading">
+          <h1 class="panel-title font-hanna">회원가입</h1>
+        </div>
+        <div class="panel-body" align="center">
+          <img id="profile-img" class="img-circle" style="padding-top:20px"src="//ssl.gstatic.com/accounts/ui/avatar_2x.png"/>
+          <div style="padding-top:30px">
+            <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
+              <%= devise_error_messages! %>
+                <h4 align="left">* 필수항목 </h4>
+                
+                <div class="input-group">
+                  <%= f.email_field :email, autofocus: true, :class => "form-control", :placeholder => "아이디로 쓰일 이메일", required: true %>
+                  <span class="input-group-btn">
+                    <button class="btn btn-default" type="button">중복확인</button>
+                  </span>
+                </div><!-- /input-group -->
+                
+                
+                <br>
+                
+                <div class="input-group">
+                  <%= f.text_field :nickname, autofocus: true, :class => "form-control", :placeholder => "닉네임", required: true %>
+                  <span class="input-group-btn">
+                    <button class="btn btn-default" type="button">중복확인</button>
+                  </span>
+                </div><!-- /input-group -->
+                
+                <br>
+                
+                <div class="input-group">
+                  <%= f.text_field :phone, autofocus: true, :class => "form-control", :placeholder => "핸드폰 번호(판매등록시 필요합니다.)", required: true %>
+                  <span class="input-group-btn">
+                    <button class="btn btn-default" type="button">인증</button>
+                  </span>
+                </div><!-- /input-group -->
+                <!--<input type="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>-->
+                
+                <br>
+       
+  
+                <%= f.password_field :password, autocomplete: "off", :class => "form-control", :placeholder => "비밀번호(최소 6글자)", required: true %>
+                <!--<input type="password" id="inputPassword" class="form-control" placeholder="Password" required>-->
+                
+                <br>
+                
+                <%= f.password_field :password_confirmation, autocomplete: "off", :class => "form-control", :placeholder => "비밀번호 재입력", required: true %>
+                
+                
+                <br>
+                
+                <h4 align="left">* 선택항목 </h4>
+                
+                <%= f.text_field :major, autofocus: true, :class => "form-control", :placeholder => "학과" %>
+                <!--<input type="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>-->
+                
+                <br>
+                
+                
+                <%= f.text_field :name, autofocus: true, :class => "form-control", :placeholder => "이름" %>
+                <!--<input type="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>-->
+                
+                <br><br>
+                
+              
+                <div class="actions" style = "font-size:25px">
+                  <input type="submit" name="commit" class="btn btn-primary btn-lg btn-block font-hanna" value="회원가입">
+                 <%#= f.submit "로그인" %> 
+                </div>
+                
+            <% end %><!-- /form -->
+          </div>
+          <%= render "devise/shared/links" %>
+          
+        </div>
+      </div>
+    </div>
+    
+    <div class="col-md-3 col-sm-2 col-xs-1"></div>
   </div>
+</div><!-- /container -->
 
-  <div class="field">
-    <%= f.label :password %>
-    <% if @minimum_password_length %>
-    <em>(<%= @minimum_password_length %> characters minimum)</em>
-    <% end %><br />
-    <%= f.password_field :password, autocomplete: "off" %>
-  </div>
 
-  <div class="field">
-    <%= f.label :password_confirmation %><br />
-    <%= f.password_field :password_confirmation, autocomplete: "off" %>
-  </div>
 
-  <div class="actions">
-    <%= f.submit "Sign up" %>
-  </div>
-<% end %>
 
-<%= render "devise/shared/links" %>
+
+
+
+
+
+
+
+
+<!--<h2>Sign up</h2>-->
+
+<!--%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>-->
+<!--  %= devise_error_messages! %>-->
+
+<!--  <div class="field">-->
+<!--    %= f.label :email %><br />-->
+<!--    %= f.email_field :email, autofocus: true %>-->
+<!--  </div>-->
+
+<!--  <div class="field">-->
+<!--    %= f.label :password %>-->
+<!--    % if @minimum_password_length %>-->
+<!--    <em>(%= @minimum_password_length %> characters minimum)</em>-->
+<!--    % end %><br />-->
+<!--    %= f.password_field :password, autocomplete: "off" %>-->
+<!--  </div>-->
+
+<!--  <div class="field">-->
+<!--    %= f.label :password_confirmation %><br />-->
+<!--    %= f.password_field :password_confirmation, autocomplete: "off" %>-->
+<!--  </div>-->
+
+<!--  <div class="actions">-->
+<!--    %= f.submit "Sign up" %>-->
+<!--  </div>-->
+<!--% end %>-->
+
+<!--%= render "devise/shared/links" %>-->

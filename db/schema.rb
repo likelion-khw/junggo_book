@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160621081453) do
+ActiveRecord::Schema.define(version: 20160625131923) do
 
   create_table "books", force: :cascade do |t|
     t.string   "status"
@@ -30,11 +30,24 @@ ActiveRecord::Schema.define(version: 20160621081453) do
     t.string   "message_alert"
     t.string   "image_url",     default: ""
     t.string   "image_thumurl", default: ""
+    t.integer  "buyer"
     t.datetime "created_at",                 null: false
     t.datetime "updated_at",                 null: false
   end
 
+  create_table "replies", force: :cascade do |t|
+    t.integer  "book_id"
+    t.integer  "user_id"
+    t.text     "content"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "users", force: :cascade do |t|
+    t.string   "name",                   default: "", null: false
+    t.string   "nickname",               default: "", null: false
+    t.string   "phone",                  default: "", null: false
+    t.string   "major",                  default: "", null: false
     t.string   "email",                  default: "", null: false
     t.string   "encrypted_password",     default: "", null: false
     t.string   "reset_password_token"
@@ -50,6 +63,10 @@ ActiveRecord::Schema.define(version: 20160621081453) do
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true
+  add_index "users", ["major"], name: "index_users_on_major"
+  add_index "users", ["name"], name: "index_users_on_name"
+  add_index "users", ["nickname"], name: "index_users_on_nickname", unique: true
+  add_index "users", ["phone"], name: "index_users_on_phone", unique: true
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
 
 end
