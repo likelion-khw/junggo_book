@@ -21,7 +21,7 @@
               
               <br>
               <% if current_user%>
-                <button id="buy" class="grow_box btn-block font-hanna"><h3>구 입 하 기</h3></button>
+                <button id="buy" value="<%=@book.status%>" class="grow_box btn-block font-hanna"><h3>구 입 하 기</h3></button>
                 
               <%else%>
               <a href="/users/sign_in"><button class="grow_box btn-block font-hanna" onclick="alert('로그인이 필요한 서비스입니다. 로그인 페이지로 이동합니다! ')"><h3>구 입 하 기</h3></button></a>
@@ -44,7 +44,7 @@
                 </thead>
                 <tbody>
                   <tr>
-                    <th>책 이름</th>
+                    <th style="max-width:100px; min-width:50px;width:20%">책 이름</th>
                     <td><%=@book.book_title%></td>
                   </tr>
                   <tr>
@@ -74,7 +74,7 @@
                 </thead>
                 <tbody>
                   <tr>
-                    <th width="300px">사용감<br>
+                    <th style="max-width:100px; min-width:50px;width:30%">사용감<br>
                         <small>(겉표지, 구김정도, 젖은흔적 등 전체적인 상태)</small>
                     </th>
                     <td><%=@book.out_state%></td>
@@ -106,8 +106,12 @@
                 </thead>
                 <tbody>
                   <tr>
-                    <th>아이디</th>
-                    <td><%=User.find(@book.user_id).email%></td>
+                    <th style="max-width:100px; min-width:50px;width:20%">판매자</th>
+                    <td><%=User.find(@book.user_id).nickname%> 
+                      <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#detail_user">
+                        상세정보
+                      </button>
+                    </td>
                   </tr>
                   <tr>
                     <th>판매권수</th>
@@ -136,7 +140,7 @@
                <% @book.replies.each do |p| %>
                 <tbody>  
                   <tr>
-                    <th><%= User.find(p.user_id).nickname %></th>
+                    <th style="max-width:100px; min-width:50px;width:20%"><%= User.find(p.user_id).nickname %></th>
                     <td><%= p.content %></td>
                   </tr>
                <% end %>
@@ -186,8 +190,9 @@
 <script>
 $(function() {
 $(document).ready(function() {
+  
   $("#buy").click(function() {
-      // book_id = $(this).val();
+      
       $.ajax({
           url:'/deal/buyer_update',
           type:'POST',
@@ -205,7 +210,7 @@ $(document).ready(function() {
           }
       });// end ajax
       return false;
-        
+      
   });
 });
   
@@ -243,3 +248,69 @@ $(document).ready(function() {
 });
 </script>
 <%end%>
+
+
+<!-- Modal -->
+<% @user = User.find(@book.user_id) %>
+<div class="modal fade" id="detail_user" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel"><%= User.find(@book.user_id).nickname%> 님의 상세 판매 정보</h4>
+      </div>
+      <div class="modal-body">
+        <strong>* 판매자 정보</strong>
+        <table class="table">
+    			<tbody>
+    				<tr>
+    					<th>이메일</th>
+    					<td><%=@user.email%></td>
+    				</tr>
+    				
+    				<tr>
+    					<th>닉네임</th>
+    					<td><%=@user.nickname%></td>
+    				</tr>
+    				
+    				<tr>
+    					<th>학과</th>
+    					<td><%=@user.major%></td>
+    				</tr>
+    				
+    				<tr>
+    					<th>평가</th>
+    					<td>별점추가하기</td>
+    				</tr>
+    				
+    			</tbody>
+    		</table>
+    		
+    		<br>
+    		
+    		<strong>* 판매 물품</strong>
+    		<% Book.where('user_id =?',@user.id).each do |book|%>
+         <% @percent = ((1 - book.sell_price.to_f/book.book_price.to_f)*100).to_i %>
+          <a href="/deal/view/<%=book.id%>">
+      		<div class="well" style="height: 120px; padding: 10px">
+              <img src="<%=book.image_url%>" style="float:left;padding-right:20px" width="100" height="100">
+              
+              <div style="float: left;">
+                <b>책 이름: <%=book.book_title%><br>
+                판매가: <%=book.sell_price%>원 (정가대비 <%=@percent%>% 할인)<br><br>
+                판매등록일: <%= book.created_at.in_time_zone("Asia/Seoul").strftime("%Y/%m/%d %H:%M:%S")%></b>
+                
+              </div>
+              
+          </div>
+          </a>
+        <%end%>
+          
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
