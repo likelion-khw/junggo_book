@@ -198,12 +198,8 @@ $(function() {
 $(document).ready(function() {
   
   $("#buy").click(function() {
-<<<<<<< HEAD
-      
-=======
       // book_id = $(this).val();
       <% if @book.status == "판매중" %>
->>>>>>> khw
       $.ajax({
           url:'/deal/buyer_update',
           type:'POST',
@@ -223,12 +219,8 @@ $(document).ready(function() {
       <%else%>
       alert('이미 거래중인 품목입니다. ');
       return false;
-<<<<<<< HEAD
-      
-=======
       <%end%>
         
->>>>>>> khw
   });
 });
   
