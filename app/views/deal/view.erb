@@ -111,7 +111,7 @@
                   </tr>
                   <tr>
                     <th>판매권수</th>
-                    <td>3권 등록 / 1권 판매 완료</td>
+                    <td>총 <%=Book.where("user_id =? ", @book.user_id).count%>권 판매</td>
                   </tr>
                   
                 </tbody>
@@ -144,14 +144,24 @@
                  <!--<form action="/deal/reply" method="POST">  -->
                     <tr>
                       <th colspan="2">
+                        <% if current_user %>
                         <div class="input-group" style="width:100%">
                           <input class="form-control" width="100%" id="whatwrite" type="text" name="contents"placeholder = "댓글을 입력해주세요." required></input>
                           <input type="hidden" name="book_id" value="<%=@book.id%>">
-                          <input type="hidden" id="user_nickname" value="<%=current_user.nickname%>">
+                          
                           <span class="input-group-btn">
                             <button value = "reply_id" class="btn btn-default reply_submit" type="submit" >작성</button>
                           </span>
                         </div>
+                        <%else%>
+                        <div class="input-group" style="width:100%">
+                          <input class="form-control" width="100%" id="whatwrite" type="text" name="contents" value = "판매자에게 질문 로그인후 이용해주세요!!" disabled></input>
+                          
+                          <span class="input-group-btn">
+                            <a href="/users/sign_in" class="btn btn-primary reply_submit" type="button" >로그인</a>
+                          </span>
+                        </div>
+                        <%end%>
                       </th>
                       
                     </tr>
@@ -171,7 +181,7 @@
 
 <% if current_user %>
 
-
+<input type="hidden" id="user_nickname" value="<%=current_user.nickname%>">
 
 <script>
 $(function() {
