@@ -12,8 +12,10 @@ class ShareController < ApplicationController
     def sel_del
     @del = Book.find(params[:sel_del])
     @del.destroy
+
     redirect_to :back
     end
     
+
     
 end

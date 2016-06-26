@@ -7,7 +7,13 @@
       <div class="panel panel-default font-hannna">
         <div class="panel-body">
           <h2 align="center">
-            [<%=@book.book_category%>] <%=@book.book_title%> <span class="label label-success"><%=@percent%>% 할인</span> <span class="label label-info"><%=@book.status%></span>
+            [<%=@book.book_category%>] <%=@book.book_title%></a>
+                <span class="label label-success"><%=@percent%>% 할인</span>
+                <%if @book.status == "판매중"%>
+                <span class="label label-info"><%=@book.status%></span>
+                <%else%>
+                <span class="label label-danger"><%=@book.status%></span>
+                <%end%>
           </h2>
               
             
