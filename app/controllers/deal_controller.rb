@@ -7,6 +7,7 @@ class DealController < ApplicationController
   end
   
   def sell_action
+    
     book = Book.new
     
     book.status = "판매중"
@@ -77,11 +78,11 @@ class DealController < ApplicationController
   
   def buyer_update #구입버튼 누를시
     @update = Book.find(params[:book_id])
-    @update.buyer = params[:buyer]
     @update.status = params[:status]
+    @update.buyer = params[:buyer]
     @update.save
-    
     render :nothing => true
+  
     
   end
   

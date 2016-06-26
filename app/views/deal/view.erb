@@ -7,7 +7,13 @@
       <div class="panel panel-default font-hannna">
         <div class="panel-body">
           <h2 align="center">
-            [<%=@book.book_category%>] <%=@book.book_title%> <span class="label label-success"><%=@percent%>% 할인</span> <span class="label label-info"><%=@book.status%></span>
+            [<%=@book.book_category%>] <%=@book.book_title%></a>
+                <span class="label label-success"><%=@percent%>% 할인</span>
+                <%if @book.status == "판매중"%>
+                <span class="label label-info"><%=@book.status%></span>
+                <%else%>
+                <span class="label label-danger"><%=@book.status%></span>
+                <%end%>
           </h2>
               
             
@@ -192,7 +198,12 @@ $(function() {
 $(document).ready(function() {
   
   $("#buy").click(function() {
+<<<<<<< HEAD
       
+=======
+      // book_id = $(this).val();
+      <% if @book.status == "판매중" %>
+>>>>>>> khw
       $.ajax({
           url:'/deal/buyer_update',
           type:'POST',
@@ -209,8 +220,15 @@ $(document).ready(function() {
             alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
           }
       });// end ajax
+      <%else%>
+      alert('이미 거래중인 품목입니다. ');
       return false;
+<<<<<<< HEAD
       
+=======
+      <%end%>
+        
+>>>>>>> khw
   });
 });
   
