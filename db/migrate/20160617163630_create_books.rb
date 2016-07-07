@@ -28,6 +28,7 @@ class CreateBooks < ActiveRecord::Migration
       
       t.integer :buyer
       t.timestamps null: false
+      
     end
   end
 end

@@ -52,7 +52,7 @@
               </div>
               <div class="panel-footer">
                 <h4 class="font-hanna">
-                [<%=book.book_category%>] <%=book.book_title%></a>
+                [<%=book.book_category%>] <%=book.book_title%></a><br>
                 <span class="label label-success"><%=@percent%>% 할인</span>
                 <%if book.status == "판매중"%>
                 <span class="label label-info"><%=book.status%></span>
@@ -67,16 +67,16 @@
     		<%end%>
     		
       </div>
-         <center>
-           <div class="digg_pagination">
-               <div class="page_info">
-                 <!--%= page_entries_info @list %>-->
-               </div>
-               <%= will_paginate @list%>
-             <!--%= will_paginate @list %>-->
-             
-           </div>
-         </center>     
+        <center>
+           <ul class="pagination">
+              <li class="waves-effect"><a href="/deal/buy_main?category=모든책&page=1"><i class="material-icons">Prev</i></a></li>
+              
+              <% (1..6).each do |i| %>
+                 <li class="waves-effect"><a href="/deal/buy_main?category=모든책&page=<%= i%>"><%= i %></a></li>
+              <% end %>
+              <li class="waves-effect"><a href="/deal/buy_main?category=모든책&page=11"><i class="material-icons">Next</i></a></li>
+           </ul>
+        </center>
     </div>
   
   </div>
