@@ -88,4 +88,23 @@ class DealController < ApplicationController
   def user
   end
   
+  def check_user
+    check = params[:check]
+    arr = Array.new
+    
+    if check == "email"
+      User.all.each do |user|
+        arr << user.email #이메일들을 배열로
+      end
+      render json: {:result => arr.include?(params[:user_id])} #view로 데이터 보냄
+    end
+    
+    if check == "nickname"
+      User.all.each do |user|
+        arr << user.nickname #이메일들을 배열로
+      end
+      render json: {:result => arr.include?(params[:user_name])} #view로 데이터 보냄
+    end
+  end
+  
 end

@@ -1,0 +1,216 @@
+<script>
+var book_price; //정가
+var out_state = 1.0;
+var in_state = 1.0;
+var saperate = 1.0;
+var result;
+
+
+$(document).ready(function(){
+    $('#book_price').change(function(){ //정가변경시
+        
+          book_price = $(this).val();
+          // alert(book_price);
+          result = book_price * out_state * in_state * saperate;
+          $("#recommend_price").val(result);
+    });
+    
+    $("input[name=out_state]").change(function() {
+        var radioValue = $(this).val();
+  			
+  			if (radioValue == "매우 많음") {
+  				out_state = 0.6;
+  			} else if (radioValue == "조금 있음") {
+  				out_state = 0.8;
+  			} else if (radioValue == "거의 없음") {
+  				out_state = 1.0;
+  			}
+  			
+  			result = book_price * out_state * in_state * saperate;
+        $("#recommend_price").val(result);
+  			
+    });
+    
+    $("input[name=in_state]").change(function() {
+        var radioValue = $(this).val();
+  			
+  			if (radioValue == "매우 많음") {
+  				in_state = 0.6;
+  			} else if (radioValue == "조금 있음") {
+  				in_state = 0.8;
+  			} else if (radioValue == "거의 없음") {
+  				in_state = 1.0;
+  			}
+  			
+  			result = book_price * out_state * in_state * saperate;
+        $("#recommend_price").val(result);
+    });
+   
+   $("input[name=saperate]").change(function() {
+        var radioValue = $(this).val();
+  			
+  			if (radioValue == "분권함") {
+  				saperate = 0.6;
+  			} else if (radioValue == "분권하지 않음") {
+  				saperate = 1.0;
+  			} 
+  			
+  			result = book_price * out_state * in_state * saperate;
+        $("#recommend_price").val(result);
+    });
+    
+    // $("input:checkbox[id='ID']").is(":checked") == true : false
+    $("input[name=apply]").change(function() {
+      if ($(this).val() == "ok")
+            $("#sell_price").val(result);
+      else 
+            $("#sell_price").val("");
+    });
+    
+    
+    // 여기서부터 자동완성 기능 변수 지정
+    
+    var states ;
+    
+    $('input[name=book_title]').focus(function() {
+      
+      states = [
+        <% Book.all.each do |book|%>
+          "<%=book.book_title.to_s%>",
+        <%end%>
+        ];
+       var substringMatcher = function(strs) {
+                    return function findMatches(q, cb) {
+                      var matches, substringRegex;
+                  
+                      // an array that will be populated with substring matches
+                      matches = [];
+                  
+                      // regex used to determine if a string contains the substring `q`
+                      substrRegex = new RegExp(q, 'i');
+                  
+                      // iterate through the pool of strings and for any string that
+                      // contains the substring `q`, add it to the `matches` array
+                      $.each(strs, function(i, str) {
+                        if (substrRegex.test(str)) {
+                          matches.push(str);
+                        }
+                      });
+                  
+                      cb(matches);
+                    };
+                  };
+                // % ary = Array.new %>
+                // % Book.all.each do |book|%>
+                //   % ary << book.book_title.to_s %>
+                // %end%>
+                
+                
+                  $('.input-group .typeahead').typeahead({
+                    hint: true,
+                    highlight: true,
+                    minLength: 1
+                  },
+                  {
+                    name: 'states',
+                    source: substringMatcher(states)
+                  });
+    });
+    
+    $('input[name=book_writer]').focus(function() {
+      
+      states = [
+        <% Book.all.each do |book|%>
+          "<%=book.book_writer.to_s%>",
+        <%end%>
+        ];
+         var substringMatcher = function(strs) {
+                    return function findMatches(q, cb) {
+                      var matches, substringRegex;
+                  
+                      // an array that will be populated with substring matches
+                      matches = [];
+                  
+                      // regex used to determine if a string contains the substring `q`
+                      substrRegex = new RegExp(q, 'i');
+                  
+                      // iterate through the pool of strings and for any string that
+                      // contains the substring `q`, add it to the `matches` array
+                      $.each(strs, function(i, str) {
+                        if (substrRegex.test(str)) {
+                          matches.push(str);
+                        }
+                      });
+                  
+                      cb(matches);
+                    };
+                  };
+                // % ary = Array.new %>
+                // % Book.all.each do |book|%>
+                //   % ary << book.book_title.to_s %>
+                // %end%>
+                
+                
+                  $('.input-group .typeahead').typeahead({
+                    hint: true,
+                    highlight: true,
+                    minLength: 1
+                  },
+                  {
+                    name: 'states',
+                    source: substringMatcher(states)
+                  });
+    });
+    
+    $('input[name=book_company]').focus(function() {
+      states = [
+        <% Book.all.each do |book|%>
+          "<%=book.book_company.to_s%>",
+        <%end%>
+        ];
+         var substringMatcher = function(strs) {
+                    return function findMatches(q, cb) {
+                      var matches, substringRegex;
+                  
+                      // an array that will be populated with substring matches
+                      matches = [];
+                  
+                      // regex used to determine if a string contains the substring `q`
+                      substrRegex = new RegExp(q, 'i');
+                  
+                      // iterate through the pool of strings and for any string that
+                      // contains the substring `q`, add it to the `matches` array
+                      $.each(strs, function(i, str) {
+                        if (substrRegex.test(str)) {
+                          matches.push(str);
+                        }
+                      });
+                  
+                      cb(matches);
+                    };
+                  };
+                // % ary = Array.new %>
+                // % Book.all.each do |book|%>
+                //   % ary << book.book_title.to_s %>
+                // %end%>
+                
+                
+                  $('.input-group .typeahead').typeahead({
+                    hint: true,
+                    highlight: true,
+                    minLength: 1
+                  },
+                  {
+                    name: 'states',
+                    source: substringMatcher(states)
+                  });
+    });
+
+});
+
+// function ty_code() {
+      
+// }
+
+
+</script>

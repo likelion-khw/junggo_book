@@ -1,18 +1,22 @@
 <div id="headerwrap" class="font-hanna" style="background-size:cover;background-image:URL(https://images.unsplash.com/photo-1447023029226-ef8f6b52e3ea?ixlib=rb-0.3.5&q=80&fm=jpg&crop=entropy&s=36db41ace938e987e1f7f8b51c05001e)">
 	<div class="container" align="center">
 		<h1>찾고 계신 책이 있으신가요?</h1>
-		<form class="form-inline" role="form" action="/home/search" method="POST">
-		  <div class="form-group">
-		    <input type="text" style="width:300px"class="form-control" id="search" name="search" placeholder="책 이름을 검색해 주세요" autofocus="false" required>
-		    <ul class="list-group" id="book-list" align="left">
-		      <% Book.all.each do |book|%>
-          <li class="list-group-item">
-            <div class="list">
-            [<%=book.book_category%>] <%=book.book_title%>
-            </div>
-          </li>
-          <%end%>
-        </ul>
+		<form class="form-inline" role="form" action="/home/search" method="POST" id="search_form">
+		  <div class="form-group" >
+		    <input type="text" style="width:300px"class="typeahead form-control" id="search" name="search" placeholder="책 이름을 검색해 주세요"required>
+		    <!--<ul class="list-group" id="book-list" align="left">-->
+		    <!--  % Book.all.first(5).each do |book|%>-->
+		      
+      <!--      <li class="list-group-item">-->
+      <!--        <a href="/deal/view/%=book.id%>">-->
+      <!--        <div class="list">-->
+      <!--        [%=book.book_category%>] %=book.book_title%>-->
+      <!--        </div>-->
+      <!--        </a>-->
+      <!--      </li>-->
+          
+      <!--    %end%>-->
+      <!--  </ul>-->
         
 		  </div>
 		  <button type="submit" class="btn btn-warning btn-lg">찾기!</button>
@@ -120,6 +124,55 @@
 
 	</div><!-- /row -->
 </div><!-- /container -->
+
+<script>
+
+
+
+
+
+var substringMatcher = function(strs) {
+                    return function findMatches(q, cb) {
+                      var matches, substringRegex;
+                  
+                      // an array that will be populated with substring matches
+                      matches = [];
+                  
+                      // regex used to determine if a string contains the substring `q`
+                      substrRegex = new RegExp(q, 'i');
+                  
+                      // iterate through the pool of strings and for any string that
+                      // contains the substring `q`, add it to the `matches` array
+                      $.each(strs, function(i, str) {
+                        if (substrRegex.test(str)) {
+                          matches.push(str);
+                        }
+                      });
+                  
+                      cb(matches);
+                    };
+                  };
+                
+                var states = [
+                <% Book.all.each do |book|%>
+                  "<%=book.book_title%> _ <%=book.book_writer%>",
+                <%end%>
+                ];
+                
+                
+                  $('.form-group .typeahead').typeahead({
+                    hint: true,
+                    highlight: true,
+                    minLength: 1
+                  },
+                  {
+                    name: 'states',
+                    source: substringMatcher(states)
+                  });
+</script>
+  
+  
+  
   
 <!--<script>-->
 <!--$(document).ready(function() { -->
@@ -147,62 +200,61 @@
 
 
 
-<script>
-$(function () {
-    /* BOOTSNIPP FULLSCREEN FIX */
-//    if (window.location == window.parent.location) {
-//        $('#back-to-bootsnipp').removeClass('hide');
-//    }
-//    
-//    
-//    $('[data-toggle="tooltip"]').tooltip();
-//    
-//    $('#fullscreen').on('click', function(event) {
-//        event.preventDefault();
-//        window.parent.location = "http://bootsnipp.com/iframe/4l0k2";
-//    });
-//    $('a[href="#cant-do-all-the-work-for-you"]').on('click', function(event) {
-    //     event.preventDefault();
-    //     $('#cant-do-all-the-work-for-you').modal('show');
-    // })
+<!--<script>-->
+<!--$(function () {-->
+<!--    /* BOOTSNIPP FULLSCREEN FIX */-->
+<!--//    if (window.location == window.parent.location) {-->
+<!--//        $('#back-to-bootsnipp').removeClass('hide');-->
+<!--//    }-->
+<!--//    -->
+<!--//    -->
+<!--//    $('[data-toggle="tooltip"]').tooltip();-->
+<!--//    -->
+<!--//    $('#fullscreen').on('click', function(event) {-->
+<!--//        event.preventDefault();-->
+<!--//        window.parent.location = "http://bootsnipp.com/iframe/4l0k2";-->
+<!--//    });-->
+<!--//    $('a[href="#cant-do-all-the-work-for-you"]').on('click', function(event) {-->
+<!--    //     event.preventDefault();-->
+<!--    //     $('#cant-do-all-the-work-for-you').modal('show');-->
+<!--    // })-->
     
-    // $('[data-command="toggle-search"]').on('click', function(event) {
-    //     event.preventDefault();
-    //     $(this).toggleClass('hide-search');
+<!--    // $('[data-command="toggle-search"]').on('click', function(event) {-->
+<!--    //     event.preventDefault();-->
+<!--    //     $(this).toggleClass('hide-search');-->
         
-    //     if ($(this).hasClass('hide-search')) {        
-    //         $('.c-search').closest('.row').slideUp(100);
-    //     }else{   
-    //         $('.c-search').closest('.row').slideDown(100);
-    //     }
-    // })
+<!--    //     if ($(this).hasClass('hide-search')) {        -->
+<!--    //         $('.c-search').closest('.row').slideUp(100);-->
+<!--    //     }else{   -->
+<!--    //         $('.c-search').closest('.row').slideDown(100);-->
+<!--    //     }-->
+<!--    // })-->
     
-    $('#book-list').searchable({
-        searchField: '#search',
-        selector: 'li',
-        childSelector: '.list',
-        show: function( elem ) {
-            elem.slideDown(100);
-        },
-        hide: function( elem ) {
-            elem.slideUp( 100 );
-        }
-    })
-});
+<!--    $('#book-list').searchable({-->
+<!--        searchField: '#search',-->
+<!--        selector: 'li',-->
+<!--        childSelector: '.list',-->
+<!--        show: function( elem ) {-->
+<!--            elem.slideDown(100);-->
+<!--        },-->
+<!--        hide: function( elem ) {-->
+<!--            elem.slideUp( 100 );-->
+<!--        }-->
+<!--    })-->
+<!--});-->
 
 
-</script>
+<!--</script>-->
 
-<script>
-$(document).ready(function(){
-  
-    $("#search").blur(function() {
-      // alert("dkdk");
-      $("#book-list").hide();
-    });
-    $("#search").focus(function() {
-      // alert("dkdk");
-      $("#book-list").show();
-    });
-});
-</script>
+<!--<script>-->
+<!--$(document).ready(function(){-->
+<!--    $("input").blur();-->
+    
+<!--    $("#search").blur(function() {-->
+<!--      $("#book-list").hide();-->
+<!--    });-->
+<!--    $("#search").focus(function() {-->
+<!--      $("#book-list").show();-->
+<!--    });-->
+<!--});-->
+<!--</script>-->

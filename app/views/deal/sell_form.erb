@@ -29,25 +29,26 @@
                 </div>
                 
                 <br>
+                
                 <div class="input-group">
                   <span class="input-group-addon" id="basic-addon1">책 제목</span>
-                  <input class="form-control" type="text" name="book_title" required></input>
+                  <input class="typeahead form-control" name="book_title" type="text" required></input>
+                  <!--<input class="form-control" type="text" name="book_title" required></input>-->
                 </div>
                 
-                
-                
+               
                 <br>
                 
                 <div class="input-group">
                   <span class="input-group-addon" id="basic-addon1">지은이</span>
-                  <input class="form-control" type="text" name="book_writer" required></input>
+                  <input class="typeahead form-control" type="text" name="book_writer" required></input>
                 </div>
                 
                 <br>
                 
                 <div class="input-group">
                   <span class="input-group-addon" id="basic-addon1">출판사</span>
-                  <input class="form-control" type="text" name="book_company" required></input>
+                  <input class="typeahead form-control" type="text" name="book_company" required></input>
                 </div>
                 
                 <br>
@@ -354,6 +355,78 @@ $(document).ready(function(){
       else 
             $("#sell_price").val("");
     });
+    
+    
+    // 여기서부터 자동완성 기능 변수 지정
+    
+    
+    // $('input[name=book_title]').focus(function() {
+    //   var states = [
+    //     % Book.all.each do |book|%>
+    //       "%=book.book_title.to_s%>",
+    //     %end%>
+    //     ];
+    // });
+    
+    // $('input[name=book_writer]').focus(function() {
+    //   var states = [
+    //     % Book.all.each do |book|%>
+    //       "%=book.book_writer.to_s%>",
+    //     %end%>
+    //     ];
+    // });
+    
+    // $('input[name=book_company]').focus(function() {
+    //   var states = [
+    //     % Book.all.each do |book|%>
+    //       "<=book.book_company.to_s%>",
+    //     %end%>
+    //     ];
+    // });
+    
+    
+    var substringMatcher = function(strs) {
+                    return function findMatches(q, cb) {
+                      var matches, substringRegex;
+                  
+                      // an array that will be populated with substring matches
+                      matches = [];
+                  
+                      // regex used to determine if a string contains the substring `q`
+                      substrRegex = new RegExp(q, 'i');
+                  
+                      // iterate through the pool of strings and for any string that
+                      // contains the substring `q`, add it to the `matches` array
+                      $.each(strs, function(i, str) {
+                        if (substrRegex.test(str)) {
+                          matches.push(str);
+                        }
+                      });
+                  
+                      cb(matches);
+                    };
+                  };
+                // % ary = Array.new %>
+                // % Book.all.each do |book|%>
+                //   % ary << book.book_title.to_s %>
+                // %end%>
+                
+                var states = [
+                <% Book.all.each do |book|%>
+                  "<%=book.book_title.to_s%>",
+                <%end%>
+                ];
+                
+                  $('.input-group .typeahead').typeahead({
+                    hint: true,
+                    highlight: true,
+                    minLength: 1
+                  },
+                  {
+                    name: 'states',
+                    source: substringMatcher(states)
+                  });
+    
 });
 
 
@@ -444,4 +517,5 @@ $(document).ready(function(){
 
 
 // alert($("input[name=out_state]:checked").val());
+
 </script>

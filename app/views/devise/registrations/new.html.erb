@@ -15,51 +15,64 @@
               <%= devise_error_messages! %>
                 <h4 align="left">* 필수항목 </h4>
                 
-                <div class="input-group">
-                  <%= f.email_field :email, autofocus: true, :class => "form-control", :placeholder => "아이디로 쓰일 이메일", required: true %>
+                <div class="input-group" id="email-input-group">
+                  <%= f.email_field :email, autofocus: true, :class => "form-control", :id => 'email', :placeholder => "아이디로 쓰일 이메일", required: true %>
                   <span class="input-group-btn">
-                    <button class="btn btn-default" type="button">중복확인</button>
+                    <button class="btn btn-default" id="check_email" type="button">중복확인</button>
                   </span>
                 </div><!-- /input-group -->
-                
+                <div id="email-text" align="left">
+                </div>
                 
                 <br>
                 
-                <div class="input-group">
-                  <%= f.text_field :nickname, autofocus: true, :class => "form-control", :placeholder => "닉네임", required: true %>
+                <div class="input-group" id="nickname-input-group">
+                  <%= f.text_field :nickname, autofocus: true, :class => "form-control", :id => 'nickname', :placeholder => "닉네임 (2~10글자 이내)", required: true %>
                   <span class="input-group-btn">
-                    <button class="btn btn-default" type="button">중복확인</button>
+                    <button class="btn btn-default" id="check_nickname" type="button">중복확인</button>
                   </span>
                 </div><!-- /input-group -->
+                <div id="nickname-text" align="left">
+                </div>
                 
                 <br>
                 
-                <div class="input-group">
-                  <%= f.text_field :phone, autofocus: true, :class => "form-control", :placeholder => "핸드폰 번호(판매등록시 필요합니다.)", required: true %>
+                <div class="input-group" id="phone-input-group">
+                  <%= f.text_field :phone, autofocus: true, :class => "form-control", :id => 'phone', :placeholder => "핸드폰 번호(판매등록시 필요)", required: true %>
                   <span class="input-group-btn">
-                    <button class="btn btn-default" type="button">인증</button>
+                    <button class="btn btn-default" id="check_phone" type="button">인증</button>
                   </span>
                 </div><!-- /input-group -->
+                <div id="phone-text" align="left">
+                  <label class='text'>휴대폰 번호는 하이픈을 포함하여 입력하여 주세요. <br> 예) 010-0000-0000</label>
+                </div>
                 <!--<input type="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>-->
                 
                 <br>
        
-  
-                <%= f.password_field :password, autocomplete: "off", :class => "form-control", :placeholder => "비밀번호(최소 6글자)", required: true %>
+                <div class="form-group" id="password1-input-group">
+                  <%= f.password_field :password, autocomplete: "off", :id => "password1", :class => "form-control", :placeholder => "비밀번호(최소 6글자)", required: true %>
+                  <div id="password1-text" align="left">
+                  </div>
+                </div>
                 <!--<input type="password" id="inputPassword" class="form-control" placeholder="Password" required>-->
                 
-                <br>
                 
-                <%= f.password_field :password_confirmation, autocomplete: "off", :class => "form-control", :placeholder => "비밀번호 재입력", required: true %>
+              
+                <div class="form-group" id="password2-input-group">
+                  <%= f.password_field :password_confirmation, :id => "password2", autocomplete: "off", :class => "form-control", :placeholder => "비밀번호 재입력", required: true %>
+                  <div id="password2-text" align="left">
+                  </div>
+                </div>
                 
                 
                 <br>
                 
                 <h4 align="left">* 선택항목 </h4>
-                
-                <%= f.text_field :major, autofocus: true, :class => "form-control", :placeholder => "학과" %>
-                <!--<input type="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>-->
-                
+                <div class="input-group">
+                  <span class="input-group-addon" id="basic-addon1">학과</span>
+                  <%= f.select :major, options_for_select(%w[신학과 국어국문학과 도시및부동산개발학과 행정학과 사회복지학과 아동청소년복지학과 재활복지학과 다문화가족복지연공(연계전공) 경영학과 무역/물류학과 광고홍보학과 미국학과 중국학과 일본학과 컴퓨터학과 정보통신학과 데이터정보학과 음악학과 실용음악학과 방송연예학과 시각디자인학과 영상디자인학과 패션디자인및브랜딩학과 간호학과 환경융합시스템학과 교양학부 외부사용자]), {}, { :class => 'form-control selectpicker',"data-live-search" => "true",required: true } %>
+                </div>
                 <br>
                 
                 
@@ -89,40 +102,112 @@
 
 
 
-
-
-
-
-
-
-
-
-<!--<h2>Sign up</h2>-->
-
-<!--%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>-->
-<!--  %= devise_error_messages! %>-->
-
-<!--  <div class="field">-->
-<!--    %= f.label :email %><br />-->
-<!--    %= f.email_field :email, autofocus: true %>-->
-<!--  </div>-->
-
-<!--  <div class="field">-->
-<!--    %= f.label :password %>-->
-<!--    % if @minimum_password_length %>-->
-<!--    <em>(%= @minimum_password_length %> characters minimum)</em>-->
-<!--    % end %><br />-->
-<!--    %= f.password_field :password, autocomplete: "off" %>-->
-<!--  </div>-->
-
-<!--  <div class="field">-->
-<!--    %= f.label :password_confirmation %><br />-->
-<!--    %= f.password_field :password_confirmation, autocomplete: "off" %>-->
-<!--  </div>-->
-
-<!--  <div class="actions">-->
-<!--    %= f.submit "Sign up" %>-->
-<!--  </div>-->
-<!--% end %>-->
-
-<!--%= render "devise/shared/links" %>-->
+<script>
+$(document).ready(function(){
+  $("#check_email").click(function() { //이메일 중복 체크 ajax
+    var email = $("#email").val();
+    var regExp = /([\w-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/; //이메일 유효성 검사
+    
+    if (!regExp.test(email)){
+      $("#email-input-group").removeClass( "has-success" ).addClass( "has-error" );
+      $("#email-text").html("<label class='text-danger'>이메일 형식이 올바르지 않습니다.</label>");
+    }else{
+      $.ajax({
+        url:'/deal/check_user',
+        type:'POST',
+        data: {
+          user_id: email,
+          check: "email",
+          
+        },
+        success: function(data){
+          if (data.result){ //true라면 (중복되었다면)
+            $("#email-input-group").removeClass( "has-success" ).addClass( "has-error" );
+            $("#email-text").html("<label class='text-danger'>중복된 이메일입니다.</label>");
+          } else {
+            $("#email-input-group").removeClass( "has-error" ).addClass( "has-success" );
+            $("#email-text").html("<label class='text-success'>사용가능한 이메일입니다.</label>");
+          }
+        },// end
+        error:function(request,status,error){
+          alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+        }
+      });// end ajax
+    }
+    
+  });
+  
+  
+    $("#check_nickname").click(function() { //닉네임 중복체크 ajax
+    var nickname = $("#nickname").val();
+    var pattern = /^[\w\Wㄱ-ㅎㅏ-ㅣ가-힣]{2,10}$/;
+    
+    if (!pattern.test(nickname)){
+      $("#nickname-input-group").removeClass( "has-success" ).addClass( "has-error" );
+      $("#nickname-text").html("<label class='text-danger'>닉네임 형식이 올바르지 않습니다. 2~10이내로 입력해주세요.</label>");
+    }else{
+      $.ajax({
+          url:'/deal/check_user',
+          type:'POST',
+          data: {
+            user_name: nickname,
+            check: "nickname",
+            
+          },
+          success: function(data){
+            if (data.result){ //true라면 (중복되었다면)
+              $("#nickname-input-group").removeClass( "has-success" ).addClass( "has-error" );
+              $("#nickname-text").html("<label class='text-danger'>중복된 닉네임입니다.</label>");
+            } else {
+              $("#nickname-input-group").removeClass( "has-error" ).addClass( "has-success" );
+              $("#nickname-text").html("<label class='text-success'>사용가능한 닉네임입니다.</label>");
+            }
+          },// end
+          error:function(request,status,error){
+            alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+          }
+      });// end ajax
+    }
+  });
+  
+  $("#check_phone").click(function() { //휴대폰 유효성 검사
+    var phone = $("#phone").val();
+    var regExp = /^\d{3}-\d{3,4}-\d{4}$/;
+    
+    if (!regExp.test(phone)){
+      $("#phone-input-group").removeClass( "has-success" ).addClass( "has-error" );
+      $("#phone-text").html("<label class='text-danger'>휴대폰 형식이 올바르지않습니다. 하이픈을 포함하여 입력해주세요. <br> 예) 010-1234-5678</label>");
+    }else{
+      $("#phone-input-group").removeClass( "has-error" ).addClass( "has-success" );
+      $("#phone-text").html("<label class='text-success'>사용가능한 휴대폰 번호입니다.</label>");
+    }
+  });
+  
+  
+  $("#password1").change(function() { //비밀번호 체크
+    var password1 = $(this).val();
+    
+    if (password1.length < 6){
+      $("#password1-input-group").removeClass( "has-success" ).addClass( "has-error" );
+      $("#password1-text").html("<label class='text-danger'>최소 6자 이상으로 입력해주세요</label>");
+    }else{
+      $("#password1-input-group").removeClass( "has-error" ).addClass( "has-success" );
+      $("#password1-text").html("<label class='text-success'>사용가능한 비밀번호입니다.</label>");
+    }
+  });
+  
+  $("#password2").change(function() { //비밀번호 체크
+    var password1 = $("#password1").val();
+    var password2 = $("#password2").val();
+    
+    if (password1 != password2){
+      $("#password2-input-group").removeClass( "has-success" ).addClass( "has-error" );
+      $("#password2-text").html("<label class='text-danger'>비밀번호가 일치하지 않습니다. 다시한번 입력해주세요.</label>");
+    }else{
+      $("#password2-input-group").removeClass( "has-error" ).addClass( "has-success" );
+      $("#password2-text").html("<label class='text-success'>비밀번호가 일치합니다.</label>");
+    }
+  });
+  
+})
+</script>
