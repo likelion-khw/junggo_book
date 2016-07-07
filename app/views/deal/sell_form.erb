@@ -19,8 +19,8 @@
               <div class="col-xs-12 col-sm-10 col-md-10"> 
               
                 
-                <div class="input-group">
-                  <span class="input-group-addon" id="basic-addon1">책 구분</span>
+                <div class="input-group"> 
+                  <span class="input-group-addon" id="basic-addon1">책 구 분</span>
                   <select name="book_category" class="form-control" required>
                     <option value="전공">전공</option>
                     <option value="교양">교양</option>
@@ -31,39 +31,48 @@
                 <br>
                 
                 <div class="input-group">
+<<<<<<< HEAD
                   <span class="input-group-addon" id="basic-addon1">책 제목</span>
                   <input class="typeahead form-control" name="book_title" type="text" required></input>
                   <!--<input class="form-control" type="text" name="book_title" required></input>-->
+=======
+                  <span class="input-group-addon" id="basic-addon1">책 제 목</span>
+                  <input class="form-control" type="text" name="book_title" required></input>
+>>>>>>> kjw
                 </div>
                 
                
                 <br>
                 
                 <div class="input-group">
-                  <span class="input-group-addon" id="basic-addon1">지은이</span>
+                  <span class="input-group-addon" id="basic-addon1">지 은 이</span>
                   <input class="typeahead form-control" type="text" name="book_writer" required></input>
                 </div>
                 
                 <br>
                 
                 <div class="input-group">
-                  <span class="input-group-addon" id="basic-addon1">출판사</span>
+                  <span class="input-group-addon" id="basic-addon1">출 판 사</span>
                   <input class="typeahead form-control" type="text" name="book_company" required></input>
                 </div>
                 
                 <br>
                 
                 <div class="input-group">
-                  <span class="input-group-addon" id="basic-addon1">정가</span>
+                  <span class="input-group-addon" id="basic-addon1">정&nbsp;&nbsp;&nbsp; 가</span>
                   <input class="form-control" type="number" id="book_price" name="book_price" min="0" max="1000000" required></input>
+                  
                 </div>
                 
                 <br>
                 <div class="form-group">
-                  <div class="input-group">
-                    <span class="input-group-addon" id="basic-addon1">책 사진</span>
-                    <input class="form-control" type="file" id="exampleInputFile" name="pic" accept="image/*" required></input>
-                  </div>
+                  <div class="input-group upload-preview" style = "width: 300px;" >
+                    <span class="input-group-addon" id="basic-addon1">책 사 진</span>
+                    <input class="form-control" type="file" id="imgfile" name="pic" accept="image/*" required></input>
+                   
+                    <img style="width: 300px; height: 300px;"/>
+                   
+                </div>
                   
                   <!--<input type="file" id="exampleInputFile" name="pic">-->
                   <!--<p class="help-block">교재 사진을 반드시 올려주세요!</p>-->
@@ -81,7 +90,7 @@
               <div class="col-xs-12 col-sm-10 col-md-10"> 
                 
                 <div class="input-group">
-                  <span class="input-group-addon" id="basic-addon1">수업명</span>
+                  <span class="input-group-addon" id="basic-addon1">강&nbsp;&nbsp;의&nbsp;&nbsp;명</span>
                   <input class="form-control" type="text" name="class" ></input>
                 </div>
                 
@@ -296,6 +305,22 @@ var result;
 
 
 $(document).ready(function(){
+  
+  
+    var preview = $(".upload-preview img");
+
+    $("#imgfile").change(function(event){
+       var input = $(event.currentTarget);
+       var file = input[0].files[0];
+       var reader = new FileReader();
+       reader.onload = function(e){
+           image_base64 = e.target.result;
+           preview.attr("src", image_base64);
+       };
+       reader.readAsDataURL(file);
+    });
+
+  
     $('#book_price').change(function(){ //정가변경시
         
           book_price = $(this).val();

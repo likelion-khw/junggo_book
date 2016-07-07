@@ -1,6 +1,6 @@
 class Book < ActiveRecord::Base
     has_many :replies
-    self.per_page=16
+    self.per_page = 8
     
 
 end

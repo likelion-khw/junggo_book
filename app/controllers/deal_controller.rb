@@ -49,6 +49,11 @@ class DealController < ApplicationController
     # Book.paginate(:page => params[:page], :per_page => 3)
     # @list = Book.paginate(:page => params[:page], :per_page => 3).order("id desc")
     # @list = Book.where(:published => true).paginate(:page => params[:page]).order('id DESC')
+    # @pagin = Book.paginate page: params[:page], order:'created_at desc', per_page: 3
+    
+    @list = Book.paginate(:page => params[:page])
+    
+    
   end
   
   def view
