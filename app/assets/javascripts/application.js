@@ -62,28 +62,30 @@ $(document).ready(function() {
 
 
 // 검색어 드롭다운
-$(document).ready(function(){
-    $("#book-list").hide();
+
+
+// $(document).ready(function(){
+//     // $("#book-list").hide();
     
-    $("#search").blur(function() {
-      $("#book-list").hide();
-    });
-    $("#search").focus(function() {
-      $("#book-list").slideDown(100);
-    });
+//     // $("#search").blur(function() {
+//     //   $("#book-list").hide();
+//     // });
+//     // $("#search").focus(function() {
+//     //   $("#book-list").slideDown(100);
+//     // });
     
-    $('#book-list').searchable({
-        searchField: '#search',
-        selector: 'li',
-        childSelector: '.list',
-        show: function( elem ) {
-            elem.slideDown(100);
-        },
-        hide: function( elem ) {
-            elem.slideUp( 100 );
-        }
-    })
-});
+//     $('#book-list').searchable({
+//         searchField: '#search',
+//         selector: '.list-group-item',
+//         childSelector: '.media-body',
+//         show: function( elem ) {
+//             elem.slideDown(100);
+//         },
+//         hide: function( elem ) {
+//             elem.slideUp( 100 );
+//         }
+//     })
+// });
 
 
                

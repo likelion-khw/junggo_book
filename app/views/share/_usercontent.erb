@@ -1,77 +1,94 @@
+
 <% if @menu=="판매"%>
-  <input type="text" name="search-items" class="form-control" id="contact-list-search" placeholder="Search Items" autocomplete="off">
-    <ul class="list-group" id="contact-list">
-      <li class="list-group-item">
-       <% Book.where('user_id =?',current_user.id).reverse_each do |book|%>
-         <% @percent = ((1 - book.sell_price.to_f/book.book_price.to_f)*100).to_i %>
-        
-          <div class="well" style="height: 160px; padding: 10px">
-            <a href="/deal/view/<%=book.id%>">
-            <img src="<%=book.image_url%>" style="float:left;padding-right:20px" width="100" height="100">
-            </a>
-            <!--<form action="/share/sel_del" method="post">-->
-            <div style="float: left;">
-              <b>책 이름: <%=book.book_title%><br>
-              판매가: <%=book.sell_price%>원 (정가대비 <%=@percent%>% 할인)<br>
-              판매등록일: <%= book.created_at.in_time_zone("Asia/Seoul").strftime("%Y/%m/%d %H:%M:%S")%><br><br></b>
+
+  <div class="panel panel-default">
+      
+    <input type="text" class="form-control" id="contact-list-search">
+         
+      <ul class="list-group" id="contact-list">
+        <% Book.where('user_id =?',current_user.id).reverse_each do |book|%>
+        <!--<a href="/deal/view/%=book.id%>" class="list-group-item">-->
+          <% @percent = ((1 - book.sell_price.to_f/book.book_price.to_f)*100).to_i %>
+          <li class="list-group-item">
+              <div class="col-xs-12 col-sm-3">
+                  <img class="media-object" src="<%=book.image_url%>" style="float:left;padding-right:20px" width="120" height="120">
+              </div>
+              <div class="col-xs-12 col-sm-6">
+                  <a href="/deal/view/<%=book.id%>">
+                    <b><h4 class="media-heading">[<%=book.book_category%>] <%=book.book_title%> </h4>
+                  </a>
+        					판매가: <%=book.sell_price%>원 (정가대비 <%=@percent%>% 할인)<br>
+        					판매등록일: <%= book.created_at.in_time_zone("Asia/Seoul").strftime("%Y/%m/%d %H:%M:%S")%></b>
+              </div>
+              <div class="col-xs-12 col-sm-3">
+                  <% if book.status == "거래중" %>
+                    <span class="label label-warning" ><%=User.find(book.buyer).nickname%>님과 <%=book.status%></span><br>
+                    <span class="glyphicon glyphicon-phone-alt"></span> : <%=User.find(book.buyer).phone%><br>
+                    <button data-target="#deal_cancel_<%=book.id%>" data-toggle="modal" class="btn btn-warning btn-sm" type="button"><%=User.find(book.buyer).nickname%>님과 거래 취소</button>
+                    <button data-target="#deal_end_<%=book.id%>" data-toggle="modal" class="btn btn-info btn-sm" type="button">판매완료</button>
+                    <button data-target="#sel_del_<%=book.id%>" data-toggle="modal" class="btn btn-danger btn-sm" type="button">판매취소</button>
+                  <%elsif book.status =="판매완료" %>
+                    <span class="label label-success"><%=book.status%></span><br>
+                  <% else %><!--판매중-->
+                    <span class="label label-info"><%=book.status%></span><br>
+                    <button data-target="#sel_del_<%=book.id%>" data-toggle="modal" class="btn btn-danger btn-sm" type="button">판매취소</button>
+                  <% end %>
+                  <br>
+                  
+                  <button data-target="#" data-toggle="modal" class="btn btn-default btn-sm" type="button">정보수정</button>
+              </div>
               
-              <% if book.status == "거래중" %>
-              <span class="label label-warning" ><%=User.find(book.buyer).nickname%>님과 <%=book.status%></span><br>
-              <%=User.find(book.buyer).nickname%>님 연락처 :<%=User.find(book.buyer).phone%>
-              <% else %>
-              <span class="label label-info"><%=book.status%></span><br>
-              <% end %>
-              <br>
-              <a href="#sel_del_<%=book.id%>" data-toggle="modal" class="btn btn-danger btn-sm">판매취소</a>
-            </div>
-            <!--</form>-->
-            
-            <!--<div style="float: right;">-->
-            <!--  <div class="alert alert-danger">-->
-            <!--    Not Available.-->
-            <!--  </div>-->
-            <!--</div>-->
-            
-          </div>
+              <div class="clearfix"></div>
+            </li>
+          <!--</a>-->
+          <%end%>
           
-      <%end%>
-    </li>
-  </ul>
+      </ul>
+  </div>
+
   <%= render "share/modal.erb" %>
+  
 <% elsif @menu=="구매"%>
-  <input type="text" name="search-items" class="form-control" id="contact-list-search" placeholder="Search Items" autocomplete="off">
-    <ul class="list-group" id="contact-list">
-      <li class="list-group-item">
-       <% Book.where('buyer =?',current_user.id).reverse_each do |book|%>
-         <% @percent = ((1 - book.sell_price.to_f/book.book_price.to_f)*100).to_i %>
-        
-          <div class="well" style="height: 160px; padding: 10px">
-            <a href="/deal/view/<%=book.id%>">
-            <img src="<%=book.image_url%>" style="float:left;padding-right:20px" width="100" height="100">
-            </a>
-            
-            <div style="float: left;">
-              <b>책 이름: <%=book.book_title%><br>
-              구매가: <%=book.sell_price%>원 (정가대비 <%=@percent%>% 할인)<br><br>
-              판매자: <%=User.find(book.user_id).nickname%><br>
-              거래일: <%= book.updated_at.in_time_zone("Asia/Seoul").strftime("%Y/%m/%d %H:%M:%S")%></b><br>
-              <br>
-              <a href="#buy_del_<%=book.id%>" data-toggle="modal" class="btn btn-danger btn-sm">구입취소</a>
-            
-            </div>
-           
-            
-            <!--<div style="float: right;">-->
-            <!--  <div class="alert alert-danger">-->
-            <!--    Not Available.-->
-            <!--  </div>-->
-            <!--</div>-->
-            
-          </div>
+  <div class="panel panel-default">
+      
+    <input type="text" class="form-control" id="contact-list-search">
+         
+      <ul class="list-group" id="contact-list">
+        <% Book.where('buyer =?',current_user.id).reverse_each do |book|%>
+        <!--<a href="/deal/view/%=book.id%>" class="list-group-item">-->
+          <% @percent = ((1 - book.sell_price.to_f/book.book_price.to_f)*100).to_i %>
+          <li class="list-group-item">
+              <div class="col-xs-12 col-sm-3">
+                  <img class="media-object" src="<%=book.image_url%>" style="float:left;padding-right:20px" width="120" height="120">
+              </div>
+              <div class="col-xs-12 col-sm-6">
+                  <a href="/deal/view/<%=book.id%>">
+                    <b><h4 class="media-heading">[<%=book.book_category%>] <%=book.book_title%> </h4>
+                  </a>
+        					판매가: <%=book.sell_price%>원 (정가대비 <%=@percent%>% 할인)<br>
+        					거래일: <%= book.updated_at.in_time_zone("Asia/Seoul").strftime("%Y/%m/%d %H:%M:%S")%></b>
+              </div>
+              <div class="col-xs-12 col-sm-3">
+                  <% if book.status == "거래중" %>
+                    <span class="label label-warning" >판매자 : <%=User.find(book.user_id).nickname%></span><br>
+                    <span class="glyphicon glyphicon-phone-alt"></span> : <%=User.find(book.user_id).phone%><br>
+                    <button data-target="#buy_del_<%=book.id%>" data-toggle="modal" class="btn btn-danger btn-sm" type="button">구매취소</button>
+                  <%elsif book.status =="판매완료" %>
+                    <span class="label label-success"><%=book.status%></span><br>
+                  <% else %>
+                    <span class="label label-info"><%=book.status%></span><br>
+                  <% end %>
+                  
+              </div>
+              
+              <div class="clearfix"></div>
+            </li>
+          <!--</a>-->
+          <%end%>
           
-        <%end%>
-    </li>
-  </ul>
+      </ul>
+  </div>
+      
   <%= render "share/modal.erb" %>
 <% elsif @menu=="프로필"%>
   <div class="row">
@@ -125,3 +142,22 @@
   <!--모달-->
   <%= render "share/modal.erb" %>
 <%end%>
+
+<script>
+$(function () {
+    /* BOOTSNIPP FULLSCREEN FIX */
+   
+    
+    $('#contact-list').searchable({
+        searchField: '#contact-list-search',
+        selector: 'li',
+        childSelector: '.col-xs-12',
+        show: function( elem ) {
+            elem.slideDown(100);
+        },
+        hide: function( elem ) {
+            elem.slideUp( 100 );
+        }
+    })
+});
+</script>

@@ -1,53 +1,97 @@
 <div id="warapper">
-<div align="center" style="height:300px; padding-top:100px;background-size:cover;background-image:URL(https://images.unsplash.com/photo-1427835569204-a54780340cb5?ixlib=rb-0.3.5&q=80&fm=jpg&crop=entropy&s=004e391f8d744a509a9100f69ee96792)">
+  <div align="center" style="height:300px; padding-top:100px;background-size:cover;background-image:URL(https://images.unsplash.com/photo-1427835569204-a54780340cb5?ixlib=rb-0.3.5&q=80&fm=jpg&crop=entropy&s=004e391f8d744a509a9100f69ee96792)">
+  
+    <h1 class="font-hanna" style="color:white">구 입 하 기<br><h3><span class="label label-warning"><%=@category%></span>
+    <span class="label label-warning"><%if @check == "true" %>구매 가능한 것만 보기<%else%> 전체 보기<%end%></span>
+    </h3></h1>
+  </div>
 
-  <h1 class="font-hanna" style="color:white">구 입 하 기<br><h3><span class="label label-warning"><%=@category%></span></h3></h1>
-</div>
 
-
-<div class="font-hanna" style="background-color:lightgray;padding:30px">
-  <div class="row">
-    <div class="col-xs-12 col-sm-4 col-md-4">
-      <a href="/deal/sell_main"><button class="grow_box btn-block"><h4>책 판매하기</h4></button></a><br>
-                  
-        <h4 class="font-hanna">카테고리</h4>
-        
-        <div class="btn-group-vertical btn-block">
-          <label class="btn btn-default">
-            <input type="radio" name="category" value="모든책" autocomplete="off"> 모든 책
-          </label>
-          <label class="btn btn-default">
-            <input type="radio" name="category" value="전공" autocomplete="off"> 전공
-          </label>
-          <label class="btn btn-default">
-            <input type="radio" name="category" value="교양" autocomplete="off"> 교양
-          </label>
-          <label class="btn btn-default">
-            <input type="radio" name="category" value="기타" autocomplete="off"> 기타
-          </label>
-        </div>
-    </div>
-    
-    <br>
-    
-    <% if @category == "모든책" %>
-      <% @list = Book.all.page(params[:page])%>
-    <%else%>
-      <% @list = Book.where("book_category =?",@category).page(params[:page])%>
-    <%end%>
-    
-    <div class="col-xs-12 col-sm-8 col-md-8" id="book_list">
+  <div class="font-hanna" style="background-color:lightgray;padding:30px">
+    <div class="row">
+      <div class="col-xs-12 col-sm-4 col-md-4">
+        <a href="/deal/sell_main"><button class="grow_box btn-block"><h4>책 판매하기</h4></button></a><br>
+          
+          <label for="check" class="btn btn-block btn-lg btn-success">구매 가능한 것만 보기 <input type="checkbox" id="check" class="badgebox" <%if @check == "true"%> checked <%end%>><span class="badge">&check;</span></label>
+          
+          <br>
+          
+          <h4 class="font-hanna">카테고리</h4>
+          
+          <div class="btn-group-vertical btn-block">
+            <label class="btn btn-default">
+              <input type="radio" name="category" value="모든책" autocomplete="off" <%if @category == "모든책"%> checked <%end%>> 모든 책
+            </label>
+            <label class="btn btn-default">
+              <input type="radio" name="category" value="전공" autocomplete="off" <%if @category == "전공"%> checked <%end%>> 전공
+            </label>
+            <label class="btn btn-default">
+              <input type="radio" name="category" value="교양" autocomplete="off" <%if @category == "교양"%> checked <%end%>> 교양
+            </label>
+            <label class="btn btn-default">
+              <input type="radio" name="category" value="기타" autocomplete="off" <%if @category == "기타"%> checked <%end%>> 기타
+            </label>
+          </div>
+          
+          
+      </div>
+      
+      <!--if @category == "모든책"-->
+      <!--  @list = Book.all-->
+      <!--else-->
+      <!--  @list = Book.where("book_category =?",@category)-->
+      <!--end-->
+      
+      <!--if @check == true-->
+      <!--  @list = @list.where("status =?", "판매중")-->
+      <!--end-->
+      
+      <!--@list = @list.page(params[:page])-->
+      
+      
+      
       <br>
-      <div class="row"> 
-        
-        <% @list.reverse_each do |book| %>
-         
-          <% @percent = ((1 - book.sell_price.to_f/book.book_price.to_f)*100).to_i %>
-          <div class="col-md-3 col-sm-4 col-xs-6">
-      			<a href="/deal/view/<%=book.id%>">
-      			  
-      			<div class="panel panel-default">
-              <div class="panel-body" style="background-image:URL(<%=book.image_url%>);height:150px;background-size:cover">
+      
+      <div class="col-xs-12 col-sm-8 col-md-8" id="book_list">
+        <br>
+        <div class="row"> 
+          
+          <% @list.reverse_each do |book| %>
+           
+            <% @percent = ((1 - book.sell_price.to_f/book.book_price.to_f)*100).to_i %>
+            <div class="col-md-3 col-sm-4 col-xs-6">
+        			<a href="/deal/view/<%=book.id%>">
+        			  
+        			<div class="panel panel-default" style="margin:10px">
+                <div class="panel-body" style="background-image:URL(<%=book.image_url%>);height:150px;background-size:cover">
+                 
+                </div>
+                <div class="panel-footer">
+                  <h4 class="font-hanna">
+                  [<%=book.book_category%>] <%=book.book_title%></a>
+                  <span class="label label-success"><%=@percent%>% 할인</span>
+                  
+                  <%if book.status == "판매중"%>
+                    <span class="label label-info"><%=book.status%></span>
+                  <%else%>
+                    <span class="label label-danger"><%=book.status%></span>
+                  <%end%>
+                  
+                  </h4>
+                </div>
+              </div>
+        			
+        		</div><!--/col-lg-4 -->
+      		<%end%>
+      		
+        </div>
+           <center>
+             <div class="digg_pagination">
+                 <div class="page_info">
+                   <!--%= page_entries_info @list %>-->
+                 </div>
+                 <%= will_paginate @list%>
+               <!--%= will_paginate @list %>-->
                
               </div>
               <div class="panel-footer">
@@ -78,44 +122,102 @@
            </ul>
         </center>
     </div>
-  
   </div>
 </div>
-</div>
+
+
 <script>
 $(document).ready(function() {
+  
+  // if($("input[name=category]").is(":checked")) {
+      $("input[name=category]:checked").parent('label').attr('class', 'btn btn-success active');
+  // } else {
+  //     $("input[name=category]").parent('label').attr('class', 'btn btn-default');
+  // }
+  
+  
+  
+  // if ($("input[name=category]").val() == "%=@category%>"){
+  //   // $(this).prop("checked", true);
+  //   // $(this).parent('label').attr('class', 'btn btn-success active');
+  //   // alert($("input[name=category]").val());
+  // } 
+  
+  // $("input[name=category]").parent('label').attr('class', $(this).val() == "%=@category%>" ? 'btn btn-success active' : 'btn btn-default');
+  // $("input[name=category]").is(':checked') ? $(this).parent('label').addClass('btn btn-success active') : $(this).parent('label').addClass('btn btn-default');
+  // if ($("input[name=category]").val() == "%=@category%>"){
+  //   $(this).attr('checked', true);
+  // }
+    
+  
   $("input[name=category]").change(function() {
   
-      var category = $(this).val()
+      var category = $(this).val();
       
+      <% if @check.class == NilClass
+            @check = "no"
+        end %>
         
-      $.ajax({
-          url:'/deal/buy_main',
-          type:'POST',
-          data: {
-            category: category
-          },
-          success: function(data){
-            // alert("전송");
-            // $('#title').html(data);
-            // $( "#warapper" ).load( "/deal/buy_main #title" );
+      var check = "<%=@check%>";
+      // $('#warapper').load('/deal/buy_main?category=' + category +'&check='+ check );
+      $('#warapper').fadeOut(400).load('/deal/buy_main?category=' + category +'&check='+ check + '#book_list').fadeIn(400);
+      // $.ajax({
+      //     url:'/deal/buy_main',
+      //     type:'POST',
+      //     data: {
+      //       category: category,
+      //       check: check
+      //     },
+      //     success: function(data){
+      //       // alert("전송");
+      //       // $('#title').html(data);
+      //       // $( "#warapper" ).load( "/deal/buy_main #title" );
             
-					 // return false;
+					 //// return false;
 
-            $('#warapper').fadeOut(400).load('/deal/buy_main?category=' + category + '#book_list').fadeIn(400);
-            // $('#title').html(data);
-            // $( "#title" ).load( document.URL +  ' #title');
-            // window.location.reload(true); //전체로드
+      //       $('#warapper').fadeOut(400).load('/deal/buy_main?category=' + category +'&check='+ check + '#book_list').fadeIn(400);
+      //       // $('#title').html(data);
+      //       // $( "#title" ).load( document.URL +  ' #title');
+      //       // window.location.reload(true); //전체로드
               
-          },// end
-          error:function(request,status,error){
-            alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
-          }
-      });// end ajax
+      //     },// end
+      //     error:function(request,status,error){
+      //       alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+      //     }
+      // });// end ajax
       return false;
         
   });
-      
+  
+  $("#check").change(function() {
+  
+      var check = $("#check").is(":checked");
+      var category = "<%=@category%>";
+      // alert(category, %=@check%>);
+      // if (check == true){
+      // if (check==true){
+        // alert(typeof(check));
+        // $.ajax({
+        //     url:'/deal/buy_main',
+        //     type:'POST',
+        //     data: {
+        //       check: check,
+        //       category: category
+        //     },
+        //     success: function(data){
+              
+              $('#warapper').fadeOut(400).load('/deal/buy_main?category=' + category +'&check='+ check + '#book_list').fadeIn(400);
+             
+        //     },// end
+        //     error:function(request,status,error){
+        //       alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+        //     }
+        // });// end ajax
+      // }
+      return false;
+      // }  
+  });
+  
       // alert($(this).val());
       // window.location.reload(true);
 });
