@@ -221,7 +221,7 @@
 
 
 
-<!--오늘은 보지않기 해야함-->
+<!--오늘은 보지않기 해야함, 리뷰 작성시 에이작스 쓸것!-->
 
 
 
@@ -236,6 +236,36 @@ $(document).ready(function() {
     $('.done').click(function(){
       $('#rating').hide();
       $('#after_rating').show();
+      $.ajax({
+          url:'/deal/review',
+          type:'POST',
+          data: {
+            user_id: category,
+            deal_id: check,
+            buyer_id: ,
+            star: ,
+            review: 
+          },
+          success: function(data){
+            // alert("전송");
+            // $('#title').html(data);
+            // $( "#warapper" ).load( "/deal/buy_main #title" );
+            
+					 // return false;
+
+            $('#warapper').fadeOut(400).load('/deal/buy_main?category=' + category +'&check='+ check + '#book_list').fadeIn(400);
+            // $('#title').html(data);
+            // $( "#title" ).load( document.URL +  ' #title');
+            // window.location.reload(true); //전체로드
+              
+          },// end
+          error:function(request,status,error){
+            alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+          }
+      });// end ajax
+      return false;
+      
+      
 		});
 		
 		$('.edit').click(function(){

@@ -12,43 +12,43 @@
       <div class="col-xs-12 col-sm-4 col-md-4">
         <a href="/deal/sell_main"><button class="grow_box btn-block"><h4>책 판매하기</h4></button></a><br>
           
-          <label for="check" class="btn btn-block btn-lg btn-success">구매 가능한 것만 보기 <input type="checkbox" id="check" class="badgebox" <%if @check == "true"%> checked <%end%>><span class="badge">&check;</span></label>
-          
-          <br>
-          
-          <h4 class="font-hanna">카테고리</h4>
-          
-          <div class="btn-group-vertical btn-block">
-            <label class="btn btn-default">
-              <input type="radio" name="category" value="모든책" autocomplete="off" <%if @category == "모든책"%> checked <%end%>> 모든 책
-            </label>
-            <label class="btn btn-default">
-              <input type="radio" name="category" value="전공" autocomplete="off" <%if @category == "전공"%> checked <%end%>> 전공
-            </label>
-            <label class="btn btn-default">
-              <input type="radio" name="category" value="교양" autocomplete="off" <%if @category == "교양"%> checked <%end%>> 교양
-            </label>
-            <label class="btn btn-default">
-              <input type="radio" name="category" value="기타" autocomplete="off" <%if @category == "기타"%> checked <%end%>> 기타
-            </label>
-          </div>
-          
-          
-      </div>
+        <label for="check" class="btn btn-block btn-lg btn-success">구매 가능한 것만 보기 <input type="checkbox" id="check" class="badgebox" <%if @check == "true"%> checked <%end%>><span class="badge">&check;</span></label>
+        
+        <br>
+        
+        <h4 class="font-hanna">카테고리</h4>
+        
+        <div class="btn-group-vertical btn-block">
+          <label class="btn btn-default">
+            <input type="radio" name="category" value="모든책" autocomplete="off" <%if @category == "모든책"%> checked <%end%>> 모든 책
+          </label>
+          <label class="btn btn-default">
+            <input type="radio" name="category" value="전공" autocomplete="off" <%if @category == "전공"%> checked <%end%>> 전공
+          </label>
+          <label class="btn btn-default">
+            <input type="radio" name="category" value="교양" autocomplete="off" <%if @category == "교양"%> checked <%end%>> 교양
+          </label>
+          <label class="btn btn-default">
+            <input type="radio" name="category" value="기타" autocomplete="off" <%if @category == "기타"%> checked <%end%>> 기타
+          </label>
+        </div>
+      </div> <!--<div class="col-xs-12 col-sm-4 col-md-4">-->
+    
       
-      <!--if @category == "모든책"-->
-      <!--  @list = Book.all-->
-      <!--else-->
-      <!--  @list = Book.where("book_category =?",@category)-->
-      <!--end-->
+      <% if @category == "모든책"
+        @list = Book.all
+      else
+        @list = Book.where("book_category =?",@category)
+      end
       
-      <!--if @check == true-->
-      <!--  @list = @list.where("status =?", "판매중")-->
-      <!--end-->
+      if @check == "true"
+        @list = @list.where("status =?", "판매중")
+      else
+        @check == "false"
+      end
       
-      <!--@list = @list.page(params[:page])-->
-      
-      
+      @paging = @list.page(params[:page])
+      %>
       
       <br>
       
@@ -74,7 +74,7 @@
                   <%if book.status == "판매중"%>
                     <span class="label label-info"><%=book.status%></span>
                   <%else%>
-                    <span class="label label-danger"><%=book.status%></span>
+                    <span class="label label-danger"><%=book.status%></span> <!--거래중, 판매완료-->
                   <%end%>
                   
                   </h4>
@@ -83,34 +83,21 @@
         			
         		</div><!--/col-lg-4 -->
       		<%end%>
-      		
-        </div>
-           <center>
-             <div class="digg_pagination">
-                 <div class="page_info">
-                   <!--%= page_entries_info @list %>-->
-                 </div>
-                 <%= will_paginate @list%>
-               <!--%= will_paginate @list %>-->
-               
+        </div> <!-- <div class="row"> -->
+        
+        
+        <center>
+          <div class="digg_pagination">
+              <div class="page_info">
+               <!--%= page_entries_info @list %>-->
               </div>
-              <div class="panel-footer">
-                <h4 class="font-hanna">
-                [<%=book.book_category%>] <%=book.book_title%></a><br>
-                <span class="label label-success"><%=@percent%>% 할인</span>
-                <%if book.status == "판매중"%>
-                <span class="label label-info"><%=book.status%></span>
-                <%else%>
-                <span class="label label-danger"><%=book.status%></span>
-                <%end%>
-                </h4>
-              </div>
-            </div>
-      			
-      		</div><!--/col-lg-4 -->
-    		<%end%>
+              <%= will_paginate @paging%>
+           <!--%= will_paginate @list %>-->
+           
+          </div>
     		
       </div>
+      <!--페이징-->
         <center>
            <ul class="pagination">
               <li class="waves-effect"><a href="/deal/buy_main?category=모든책&page=1"><i class="material-icons">Prev</i></a></li>
@@ -121,6 +108,7 @@
               <li class="waves-effect"><a href="/deal/buy_main?category=모든책&page=11"><i class="material-icons">Next</i></a></li>
            </ul>
         </center>
+        
     </div>
   </div>
 </div>
@@ -160,31 +148,31 @@ $(document).ready(function() {
         
       var check = "<%=@check%>";
       // $('#warapper').load('/deal/buy_main?category=' + category +'&check='+ check );
-      $('#warapper').fadeOut(400).load('/deal/buy_main?category=' + category +'&check='+ check + '#book_list').fadeIn(400);
-      // $.ajax({
-      //     url:'/deal/buy_main',
-      //     type:'POST',
-      //     data: {
-      //       category: category,
-      //       check: check
-      //     },
-      //     success: function(data){
-      //       // alert("전송");
-      //       // $('#title').html(data);
-      //       // $( "#warapper" ).load( "/deal/buy_main #title" );
+      // $('#warapper').fadeOut(400).load('/deal/buy_main?category=' + category +'&check='+ check + '#book_list').fadeIn(400);
+      $.ajax({
+          url:'/deal/buy_main',
+          type:'POST',
+          data: {
+            category: category,
+            check: check
+          },
+          success: function(data){
+            // alert("전송");
+            // $('#title').html(data);
+            // $( "#warapper" ).load( "/deal/buy_main #title" );
             
-					 //// return false;
+					 // return false;
 
-      //       $('#warapper').fadeOut(400).load('/deal/buy_main?category=' + category +'&check='+ check + '#book_list').fadeIn(400);
-      //       // $('#title').html(data);
-      //       // $( "#title" ).load( document.URL +  ' #title');
-      //       // window.location.reload(true); //전체로드
+            $('#warapper').fadeOut(400).load('/deal/buy_main?category=' + category +'&check='+ check + '#book_list').fadeIn(400);
+            // $('#title').html(data);
+            // $( "#title" ).load( document.URL +  ' #title');
+            // window.location.reload(true); //전체로드
               
-      //     },// end
-      //     error:function(request,status,error){
-      //       alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
-      //     }
-      // });// end ajax
+          },// end
+          error:function(request,status,error){
+            alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+          }
+      });// end ajax
       return false;
         
   });
@@ -195,25 +183,25 @@ $(document).ready(function() {
       var category = "<%=@category%>";
       // alert(category, %=@check%>);
       // if (check == true){
-      // if (check==true){
+      if (check==true){
         // alert(typeof(check));
-        // $.ajax({
-        //     url:'/deal/buy_main',
-        //     type:'POST',
-        //     data: {
-        //       check: check,
-        //       category: category
-        //     },
-        //     success: function(data){
+        $.ajax({
+            url:'/deal/buy_main',
+            type:'POST',
+            data: {
+              check: check,
+              category: category
+            },
+            success: function(data){
               
               $('#warapper').fadeOut(400).load('/deal/buy_main?category=' + category +'&check='+ check + '#book_list').fadeIn(400);
              
-        //     },// end
-        //     error:function(request,status,error){
-        //       alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
-        //     }
-        // });// end ajax
-      // }
+            },// end
+            error:function(request,status,error){
+              alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+            }
+        });// end ajax
+      }
       return false;
       // }  
   });

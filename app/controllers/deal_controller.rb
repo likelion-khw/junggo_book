@@ -47,19 +47,19 @@ class DealController < ApplicationController
     @category = params[:category] #카테고리구분
     @check = params[:check]
     
-    if @category == "모든책"
-      @list = Book.all
-    else
-      @list = Book.where("book_category =?",@category)
-    end
+    # if @category == "모든책"
+    #   @list = Book.all
+    # else
+    #   @list = Book.where("book_category =?",@category)
+    # end
     
-    if @check == "true"
-      @list = @list.where("status =?", "판매중")
-    else
-      @check == "false"
-    end
+    # if @check == "true"
+    #   @list = @list.where("status =?", "판매중")
+    # else
+    #   @check == "false"
+    # end
     
-    @list = @list.page(params[:page])
+    # @paging = @list.page(params[:page])
     
     # @list = Book.order('created_at DESC').page(params[:page]).per_page(3)
     # @list = Book.paginate(page: params[:page], per_page: 3).order(created_at: :desc)
