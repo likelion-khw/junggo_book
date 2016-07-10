@@ -284,8 +284,8 @@ $(document).ready(function() {
     				</tr>
     				
     				<tr>
-    					<th>학과</th>
-    					<td><%=@user.major%></td>
+    					<th>판매 권수</th>
+    					<td>총 <%=Book.where("user_id =? ", @book.user_id).count%>권 판매</td>
     				</tr>
     				
     				<tr>
@@ -299,27 +299,45 @@ $(document).ready(function() {
     		<br>
     		
     		<strong>* 판매 물품</strong>
-    		<% Book.where('user_id =?',@user.id).each do |book|%>
-         <% @percent = ((1 - book.sell_price.to_f/book.book_price.to_f)*100).to_i %>
-          <a href="/deal/view/<%=book.id%>">
-      		<div class="well" style="height: 120px; padding: 10px">
-              <img src="<%=book.image_url%>" style="float:left;padding-right:20px" width="100" height="100">
+      		<ul class="list-group" id="contact-list">
+          <% Book.where('user_id =?',@user.id).reverse_each do |book|%>
+            <!--<a href="/deal/view/%=book.id%>" class="list-group-item">-->
+            
+              <% @percent = ((1 - book.sell_price.to_f/book.book_price.to_f)*100).to_i %>
+              <li class="list-group-item">
+                  <div class="col-xs-12 col-sm-3">
+                      <img class="media-object" src="<%=book.image_url%>" style="float:left;padding-right:20px" width="120" height="120">
+                  </div>
+                  <div class="col-xs-12 col-sm-7">
+                      <a href="/deal/view/%=book.id%>">
+                        <b><h4 class="media-heading">[<%=book.book_category%>] <%=book.book_title%> </h4>
+                      </a>
+            					판매가: <%=book.sell_price%>원 (정가대비 <%=@percent%>% 할인)<br>
+            					판매등록일: <%= book.created_at.in_time_zone("Asia/Seoul").strftime("%Y/%m/%d %H:%M:%S")%></b>
+                  </div>
+                  <div class="col-xs-12 col-sm-2">
+                      <% if book.status == "거래중" %>
+                        <span class="label label-warning" ><%=book.status%></span><br>
+                      <%elsif book.status =="판매완료" %>
+                        <span class="label label-success"><%=book.status%></span><br>
+                      <% else %><!--판매중-->
+                        <span class="label label-info"><%=book.status%></span><br>
+                      <% end %>
+                      <br>
+                      
+                  </div>
+                  
+                  <div class="clearfix"></div>
+                </li>
               
-              <div style="float: left;">
-                <b>책 이름: <%=book.book_title%><br>
-                판매가: <%=book.sell_price%>원 (정가대비 <%=@percent%>% 할인)<br><br>
-                판매등록일: <%= book.created_at.in_time_zone("Asia/Seoul").strftime("%Y/%m/%d %H:%M:%S")%></b>
-                
-              </div>
-              
-          </div>
-          </a>
-        <%end%>
-          
+            <%end%>
+            
+          </ul>
+    
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
+        
       </div>
     </div>
   </div>

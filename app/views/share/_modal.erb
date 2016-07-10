@@ -198,3 +198,56 @@
     </div>
   </form>
 <%end%>
+
+<!--해당 회원과의 거래취소-->
+<% Book.where('status =?',"거래중").each do |book|%>
+  <form action="/share/buy_del" method="post">
+    <div class="modal fade" id="deal_cancel_<%=book.id%>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="myModalLabel">거래 취소</h4>
+          </div>
+          <div class="modal-body">
+            <u><b><%=User.find(book.buyer).nickname%></b></u>님과 <u><b>[<%=book.book_category%>] <%=book.book_title%></b></u>에 대한 거래를 취소하시겠습니까?
+          </div>
+          
+          <div class="modal-footer">
+            <button value="<%=book.id%>" name="buy_del" type="submit" class="btn btn-default">예</button>
+            <button type="button" class="btn btn-default" data-dismiss="modal">아니요</button>
+            
+          </div>
+        
+        </div>
+      </div>
+    </div>
+  </form>
+<%end%>
+
+<!--해당 회원과의 판매완료-->
+<% Book.where('status =?',"거래중").each do |book|%>
+  <form action="/share/deal_end" method="post">
+    <div class="modal fade" id="deal_end_<%=book.id%>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="myModalLabel">판매완료</h4>
+          </div>
+          <div class="modal-body">
+            <u><b><%=User.find(book.buyer).nickname%></b></u>님에게 판매가 완료되셨습니까?<br>
+            '예'를 누르시면 해당 품목에 대해 판매가 확정됩니다.
+          </div>
+          
+          <div class="modal-footer">
+            <button value="<%=book.id%>" name="deal_num" type="submit" class="btn btn-default">예</button>
+            <button type="button" class="btn btn-default" data-dismiss="modal">아니요</button>
+            
+          </div>
+        
+        </div>
+      </div>
+    </div>
+  </form>
+<%end%>
