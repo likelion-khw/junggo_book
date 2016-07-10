@@ -30,3 +30,7 @@
 .nyc-circle::after {
     background-color: RGB(49,151,251);
 }
+
+input[name=category]{
+    display: none;
+}

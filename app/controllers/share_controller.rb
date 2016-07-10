@@ -16,6 +16,14 @@ class ShareController < ApplicationController
     redirect_to :back
     end
     
+    def deal_end
+    @del = Book.find(params[:deal_num])
+    @del.status = "판매완료"
+    @del.save
+
+    redirect_to :back
+    end
+    
 
     
 end
