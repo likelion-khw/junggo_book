@@ -27,6 +27,8 @@ class CreateBooks < ActiveRecord::Migration
       t.string  :image_thumurl,   :default =>""
       
       t.integer :buyer
+      
+      t.string :review,   :default =>"no" #리뷰여부
       t.timestamps null: false
       
     end

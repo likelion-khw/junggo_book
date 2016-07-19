@@ -113,10 +113,10 @@
 	</div><!-- /row -->
 
 
-
+<!--하나의 책에는 하나의 리뷰만 작성할 수 있음.(book, review ) -->
 <!--만약 책 하나라도 구매 완료시 구매 하셨네요 평가 모달팝업 모달-->
 <% if current_user%>
-  <% if Book.where("buyer = ?", current_user.id).where("status = ?", "판매완료") %>
+  <% if Book.exists?(:buyer => current_user.id, :status => "판매완료", :review => "no")%>
     <div class="modal fade bs-example-modal-lg" id="assessment" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
       <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
@@ -126,10 +126,9 @@
           </div>
           <div class="modal-body">
             
-              <% Book.where('buyer =?',current_user.id).where("status = ?", "판매완료").reverse_each do |book|%>
-              
-                <% @percent = ((1 - book.sell_price.to_f/book.book_price.to_f)*100).to_i %>
-                
+              <% Book.where('buyer =?',current_user.id).where("status = ?", "판매완료").where("review = ?", "no").reverse_each do |book|%>
+                <!--% if Review.exists?(:deal_id => book.id) %> <!--해당리뷰가 있다면-->
+                <!--%else%> <!-- 해당리뷰ㅠ 없다면 -->
                   <div class="panel panel-primary front"><!--front-->
                     <div class="panel-heading">
                       <h3 class="panel-title font-hanna">[<%=book.book_category%>] <%=book.book_title%></h3>
@@ -145,22 +144,22 @@
               					  거래일: <%= book.updated_at.in_time_zone("Asia/Seoul").strftime("%Y/%m/%d %H:%M:%S")%></b><br>
               					  <span class="label label-warning" >판매자 : <%=User.find(book.user_id).nickname%></span><br><br>
               					  
-              					  <div id="rating">
+              					  <div id="rating_div_<%=book.id%>">
                 					  <span class="star-rating">
-                              <input type="radio" name="rating" value="1"><i></i>
-                              <input type="radio" name="rating" value="2"><i></i>
-                              <input type="radio" name="rating" value="3"><i></i>
-                              <input type="radio" name="rating" value="4"><i></i>
-                              <input type="radio" name="rating" value="5"><i></i>
+                              <input type="radio" id="rating_<%=book.id%>" value="1"><i></i>
+                              <input type="radio" id="rating_<%=book.id%>" value="2"><i></i>
+                              <input type="radio" id="rating_<%=book.id%>" value="3"><i></i>
+                              <input type="radio" id="rating_<%=book.id%>" value="4"><i></i>
+                              <input type="radio" id="rating_<%=book.id%>" value="5"><i></i>
                             </span>
                             
-                					  <textarea class="form-control animated" cols="50" id="new-review" name="comment" placeholder="리뷰를 작성해주세요!" rows="2"></textarea><br>
-                            <div align="right"><button type="button" class="btn btn-primary done">작성완료</button></div>
+                					  <textarea class="form-control animated" cols="50" id="review_<%=book.id%>" name="comment" placeholder="리뷰를 작성해주세요!" rows="2"></textarea><br>
+                            <div align="right"><button type="button" class="btn btn-primary done" onclick="review(<%=book.id%>)">작성완료</button></div>
                           </div>
                           
-                          <div class="well well-lg back" id="after_rating" style="display:none">
+                          <div class="well well-lg back" id="after_div_<%=book.id%>" style="display:none">
                             <b>리뷰를 작성했습니다! 소중한 리뷰 감사합니다!</b>
-                            <div align="right"><button type="button" class="btn btn-primary edit">수정하기</button></div>
+                            <!--<div align="right"><button type="button" class="btn btn-primary" onclick = "$('#rating_div_%=book.id%>').show(); $('#after_div_%=book.id%>').hide();">수정하기</button></div>-->
                           </div>
                           
                           
@@ -168,13 +167,18 @@
                       </div>
           					</div>
                   </div><!--front end-->
-                  
-                  <div class="well well-lg back" style="display:none">
-                    리뷰를 작성했습니다! 소중한 리뷰 감사합니다!
-                  </div>
+                 
+                <!--hidden으로 값 넘기기-->
+                <input type="hidden" id="user_id_<%=book.id%>" value="<%=book.user_id%>"><!--판매자 id-->
+                <!--<input type="hidden" id="deal_id_%=@book.id%>" value="%=@book.id%>">-->
+                <input type="hidden" id="buyer_id_<%=book.id%>" value="<%=current_user.id%>">
+                <!--<input type="hidden" id="star" value="1">-->
+                <!--<input type="hidden" id="review" value="1">-->
+                <!--%end%><!--넘어가기-->
+                <% @percent = ((1 - book.sell_price.to_f/book.book_price.to_f)*100).to_i %>
                 
-                <!--</a>-->
-                <%end%>
+                  
+              <%end%>
                 
             
           </div>
@@ -214,46 +218,17 @@
 <script>
 $(document).ready(function() { 
     $('#assessment').modal('show'); //모달이 뜨고 오류가 나면 제이쿼리가 두번 들어갔는지 확인할것!
-    
-    $('.done').click(function(){
-      $('#rating').hide();
-      $('#after_rating').show();
-      $.ajax({
-          url:'/deal/review',
-          type:'POST',
-          data: {
-            user_id: category,
-            deal_id: check,
-            buyer_id: ,
-            star: ,
-            review: 
-          },
-          success: function(data){
-            // alert("전송");
-            // $('#title').html(data);
-            // $( "#warapper" ).load( "/deal/buy_main #title" );
-            
-					 // return false;
-
-            $('#warapper').fadeOut(400).load('/deal/buy_main?category=' + category +'&check='+ check + '#book_list').fadeIn(400);
-            // $('#title').html(data);
-            // $( "#title" ).load( document.URL +  ' #title');
-            // window.location.reload(true); //전체로드
-              
-          },// end
-          error:function(request,status,error){
-            alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
-          }
-      });// end ajax
-      return false;
-      
-      
-		});
-		
+   
 		$('.edit').click(function(){
-      $('#rating').show();
+      $('#rating_div').show();
       $('#after_rating').hide();
 		});
+		
+		
+		
+		
+		
+		
 		
 		// if $('#dont_show').change(function() {
 		//   $('#assessment').modal('hide');
@@ -301,6 +276,43 @@ var substringMatcher = function(strs) {
                     name: 'states',
                     source: substringMatcher(states)
                   });
+                  
+                  
+var review = function(id){
+        var user = '#user_id_' + id;
+        var star = 'rating_' + id;
+        var review = '#review_' + id;
+        var buyer = '#buyer_id_' + id;
+        
+        var user_id = $(user).val();
+        var star_val = $('input[id='+ star +']:checked').val();
+        var review_val = $(review).val();
+        var buyer_id = $(buyer).val();
+      
+        $.ajax({
+            url:'/share/review',
+            type:'POST',
+            data: {
+              user_id: user_id, //판매자아이디
+              deal_id: id,
+              buyer_id: buyer_id,
+              star: star_val,
+              review: review_val 
+            },
+            success: function(data){
+              var rating_div = '#rating_div_' + id;
+              var after_div = '#after_div_' + id;
+              
+              $(rating_div).hide();
+              $(after_div).show();
+                
+            },// end
+            error:function(request,status,error){
+              alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+            }
+        });// end ajax
+      return false;
+}
 </script>
   
   
