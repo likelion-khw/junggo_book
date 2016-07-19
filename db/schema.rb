@@ -31,8 +31,9 @@ ActiveRecord::Schema.define(version: 20160709182349) do
     t.string   "image_url",     default: ""
     t.string   "image_thumurl", default: ""
     t.integer  "buyer"
-    t.datetime "created_at",                 null: false
-    t.datetime "updated_at",                 null: false
+    t.string   "review",        default: "no"
+    t.datetime "created_at",                   null: false
+    t.datetime "updated_at",                   null: false
   end
 
   create_table "replies", force: :cascade do |t|
