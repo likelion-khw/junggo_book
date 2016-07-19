@@ -183,7 +183,7 @@ $(document).ready(function() {
       var category = "<%=@category%>";
       // alert(category, %=@check%>);
       // if (check == true){
-      if (check==true){
+      // if (check==true){
         // alert(typeof(check));
         $.ajax({
             url:'/deal/buy_main',
@@ -201,7 +201,7 @@ $(document).ready(function() {
               alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
             }
         });// end ajax
-      }
+      // }
       return false;
       // }  
   });

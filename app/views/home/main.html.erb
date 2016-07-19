@@ -3,7 +3,7 @@
 		<h1>찾고 계신 책이 있으신가요?</h1>
 		<form class="form-inline" role="form" action="/home/search" method="POST" id="search_form">
 		  <div class="form-group" >
-		    <input type="text" style="width:300px"class="typeahead form-control" id="search" name="search" placeholder="책 이름을 검색해 주세요"required>
+		    <input type="text" style="width:300px" class="typeahead form-control" id="search" name="search" placeholder="책 이름을 검색해 주세요"required>
 		    <!--<ul class="list-group" id="book-list" align="left">-->
 		    <!--  % Book.all.first(5).each do |book|%>-->
 		      
@@ -37,13 +37,13 @@
 	    11. 판매등록 시간 한국시간으로 -> 0625 변경완료<br>
 	    *12. 전공별 보기 및 판매중, 판매완료 구분 카테고리 추가<br>
 
-	    *13. 거래 완료시 거래완료 표시 구현하기 -> 현웅오빠<br>
-	    *14. ajax이용해서 판매자 질문하기->주원오빠 -> 0626 완성 -> 댓글미입력시 에러메시지 출력 ok and table크기조절<br>
+	    13. 거래 완료시 거래완료 표시 구현하기 -> 현웅오빠 ok<br>
+	    14. ajax이용해서 판매자 질문하기->주원오빠 -> 0626 완성 -> 댓글미입력시 에러메시지 출력 ok and table크기조절<br>
 	    15. 로그인 안하고 판매물품 클릭 시 에러뜨는데 이것을 로그인화면으로 옮기게끔 해야함. ->지연 수정 0626<br>
 	    16. 로그인 안했을때 상품별 view에서 댓글입력못하게 ->지연 ->0626 완성
 	    17. 이미지첨부 시, 미리보기 효과 추가 -> 주원 -> 0628
 	    18. pagination기능 추가 -> 주원 -> 0628 -> 추가보완필요!
-
+      *19. 가입했을때 조건 충족해야 가입 가능
 	  </div>
 	</div><!-- conainer -->
 	
@@ -256,44 +256,7 @@ $(document).ready(function() {
 }); 
 // $('input[name=dont_show]').is(":checked") ? 
 
-var substringMatcher = function(strs) {
-                    return function findMatches(q, cb) {
-                      var matches, substringRegex;
-                  
-                      // an array that will be populated with substring matches
-                      matches = [];
-                  
-                      // regex used to determine if a string contains the substring `q`
-                      substrRegex = new RegExp(q, 'i');
-                  
-                      // iterate through the pool of strings and for any string that
-                      // contains the substring `q`, add it to the `matches` array
-                      $.each(strs, function(i, str) {
-                        if (substrRegex.test(str)) {
-                          matches.push(str);
-                        }
-                      });
-                  
-                      cb(matches);
-                    };
-                  };
-                
-                var states = [
-                <% Book.all.each do |book|%>
-                  "<%=book.book_title%> _ <%=book.book_writer%>",
-                <%end%>
-                ];
-                
-                
-                  $('.form-group .typeahead').typeahead({
-                    hint: true,
-                    highlight: true,
-                    minLength: 1
-                  },
-                  {
-                    name: 'states',
-                    source: substringMatcher(states)
-                  });
+
                   
                   
 var review = function(id){

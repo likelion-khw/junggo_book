@@ -41,6 +41,20 @@ class ShareController < ApplicationController
     
     end
     
+    def edit_book
+      @edit = Book.find(params[:deal_num])
+      @edit.book_title = params[:book_title]
+      @edit.book_writer = params[:book_writer]
+      @edit.book_company = params[:book_category]
+      @edit.book_price = params[:book_price]
+      @edit.sell_price = params[:sell_price]
+      @edit.class_name = params[:class]
+      @edit.teacher = params[:teacher]
+      @edit.save
+      
+      redirect_to :back
+    end
+    
 
     
 end

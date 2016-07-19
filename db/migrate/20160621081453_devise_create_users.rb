@@ -41,7 +41,7 @@ class DeviseCreateUsers < ActiveRecord::Migration
     
     add_index :users, :name
     add_index :users, :nickname,                unique: true
-    add_index :users, :phone,                   unique: true
+    add_index :users, :phone
     add_index :users, :major
     
     add_index :users, :email,                unique: true
