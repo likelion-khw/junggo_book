@@ -39,6 +39,7 @@ ActiveRecord::Schema.define(version: 20160709182349) do
   create_table "replies", force: :cascade do |t|
     t.integer  "book_id"
     t.integer  "user_id"
+    t.integer  "reple_id"
     t.text     "content"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false

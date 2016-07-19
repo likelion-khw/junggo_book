@@ -139,15 +139,17 @@
                      <colgroup>
                         <col width="50">
                         <col width="500">
+                        <col width="30">
                      </colgroup>
                 </thead>
-                
-              
-               <% @book.replies.each do |p| %>
+               
+               
+               <% @book.replies.each do |p| %> 
                 <tbody>  
                   <tr>
                     <th style="max-width:100px; min-width:50px;width:20%"><%= User.find(p.user_id).nickname %></th>
                     <td><%= p.content %></td>
+                    <td><button value = "<%= p.id %>" name = "reply_del_name"id= "reply_del" class = "btn reply_delete" %>삭제</button></td>
                   </tr>
                <% end %>
               
@@ -160,7 +162,7 @@
                           <input type="hidden" name="book_id" value="<%=@book.id%>">
                           
                           <span class="input-group-btn">
-                            <button value = "reply_id" class="btn btn-default reply_submit" type="submit" >작성</button>
+                            <button  class="btn btn-default reply_submit" type="submit" >작성</button>
                           </span>
                         </div>
                         <%else%>
@@ -226,36 +228,68 @@ $(document).ready(function() {
   
   
   
- 
-    $(".reply_submit").click(function() {
-      user_nickname = $("#user_nickname").val();
-      // user_nickname = user_nickname.toString();
-      reply_id = this.value;
-      reply_content = $("#whatwrite").val();
-      
-        $.ajax({
-        method: "post",
-        url: "/deal/reply",
-        data: {contents: reply_content,
-               book_id: "<%=@book.id%>"
+   
+  $(".reply_submit").click(function() {
+    user_nickname = $("#user_nickname").val();
+    // user_nickname = user_nickname.toString();
+    reply_id = this.value;
+        
+    reply_content = $("#whatwrite").val();
+    reply_dele = $("#reply_del").val();
+        
+    $.ajax({
+            method: "post",
+            url: "/deal/reply",
+            data: {contents: reply_content,
+                 book_id: "<%=@book.id%>"
             },
-            
-        success: function(){
-          $('#reply_table').find("tr:last").before('<tr><th>'+user_nickname+ '</th><td>' + reply_content + '</td></tr>');
-          // $("#reply_"+ reply_id).append("<td>"+reply_content+"</td>");
-          $("#whatwrite").val("");
-     
-        },
-        
-        error: function(){
-           alert("댓글을 입력해주세요.");
-        }
+              
+        success: function(data)
+          {
+            $('#reply_table').find("tr:last").before('<tr><th>'+user_nickname+ '</th><td>' + reply_content + '</td><td><button type="submit" class = "btn reply_delete" value = "'+ data.reply_id+ '" class = "btn" >삭제</a></td></tr>'  );
+            // $("#reply_"+ reply_id).append("<td>"+reply_content+"</td>");
+            $("#whatwrite").val("");
+          },
           
-        })
-        
-    })  
+        error: function()
+          {
+             alert("댓글을 입력해주세요.");
+          }
+            
+          })
+          
+  })  
+
+  
+  $(".reply_delete").click(function() {
+          reply_id = this.value;
+          $.ajax({
+          method: "post",
+          url: "/deal/destroy",
+          data: {id: reply_id
+              },
+              
+          success: function(data){
+            //해당 댓글이 없애는 ajax를 사용해야한다.
+            $("#whatwrite").val("");
+       
+          },
+          
+          error: function(){
+             alert("댓글을 입력해주세요.");
+          }
+            
+          })
+          
+      })  
+      
+  
+
     
 });
+
+
+
 </script>
 <%end%>
 

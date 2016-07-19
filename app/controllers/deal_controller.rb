@@ -73,6 +73,12 @@ class DealController < ApplicationController
     
   end
   
+  def destroy
+    @reple_id = Reply.find(params[:id])
+    @reple_id.destroy    
+    redirect_to :back
+  end
+  
   def view
     @book = Book.find(params[:id])
     @percent = ((1 - @book.sell_price.to_f/@book.book_price.to_f)*100).to_i
@@ -89,7 +95,7 @@ class DealController < ApplicationController
       reply.book_id = params[:book_id]
       
       if reply.save
-        redirect_to :back
+        render json: {:reply_id => reply.id}  #reply_id값을 반환한다는 뜻임.
       else 
         render :text => reply.errors.messages[:contents].first
       
