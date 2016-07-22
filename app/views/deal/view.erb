@@ -306,10 +306,47 @@ $(document).ready(function() {
     					<th>판매 권수</th>
     					<td>총 <%=Book.where("user_id =? ", @book.user_id).count%>권 판매</td>
     				</tr>
+    				<% if Review.exists?(:user_id => @book.user_id) %>
+    				  <% @star = Review.where("user_id=?", @book.user_id).average(:star).ceil%>
     				
+    				  <% if @star == 0 %>
+                                    
+              <% elsif @star == 1 %> 
+              <% @checking1 = "on" %> 
+              
+              <% elsif @star == 2 %>
+              <% @checking2 = "on" %> 
+                
+                
+              <% elsif @star == 3 %>
+              <% @checking3 = "on" %>
+                
+                
+              <% elsif @star == 4 %>
+              <% @checking4 = "on" %> 
+               
+              <% elsif @star == 5 %>
+              <% @checking5 = "on" %>
+               
+              <%end%>
+            <% else
+              @star = "등록된 평가가 없습니다."
+            end%>
+            
     				<tr>
     					<th>평가</th>
-    					<td>별점추가하기</td>
+    					<td>
+    					  <span class="star-rating small">
+                  <i class="<%= @checking1 %>"></i>
+                  <i class="<%= @checking2 %>"></i>
+                  <i class="<%= @checking3 %>"></i>
+                  <i class="<%= @checking4 %>"></i>
+                  <i class="<%= @checking5 %>"></i>
+                </span>
+                <% if @star.is_a? (String)%>
+                  <small><%=@star%></small>
+                <%end%>
+              </td>
     				</tr>
     				
     			</tbody>

@@ -73,7 +73,7 @@
         
         <form class="navbar-form navbar-left"  action="/home/search" method="POST" role="search">
           <div class="form-group" >
-    		    <input type="text" style="width:300px"class="form-control" id="search" name="search" placeholder="책 이름을 검색해 주세요"required>
+    		    <input type="text" style="width:300px" class="typeahead form-control" id="search" name="search" placeholder="책 이름을 검색해 주세요"required>
     		    <!--<ul class="list-group" id="book-list" align="left">-->
     		    <!--  % Book.all.first(5).each do |book|%>-->
     		      
@@ -114,3 +114,44 @@
 
 </body>
 </html>
+
+<script>
+var substringMatcher = function(strs) {
+                    return function findMatches(q, cb) {
+                      var matches, substringRegex;
+                  
+                      // an array that will be populated with substring matches
+                      matches = [];
+                  
+                      // regex used to determine if a string contains the substring `q`
+                      substrRegex = new RegExp(q, 'i');
+                  
+                      // iterate through the pool of strings and for any string that
+                      // contains the substring `q`, add it to the `matches` array
+                      $.each(strs, function(i, str) {
+                        if (substrRegex.test(str)) {
+                          matches.push(str);
+                        }
+                      });
+                  
+                      cb(matches);
+                    };
+                  };
+                
+                var states = [
+                <% Book.all.each do |book|%>
+                  "<%=book.book_title%>",
+                <%end%>
+                ];
+                
+                
+                  $('.form-group .typeahead').typeahead({
+                    hint: true,
+                    highlight: true,
+                    minLength: 1
+                  },
+                  {
+                    name: 'states',
+                    source: substringMatcher(states)
+                  });
+</script>

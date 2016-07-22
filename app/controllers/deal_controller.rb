@@ -78,7 +78,7 @@ class DealController < ApplicationController
     @book = Book.find(params[:id])
     @percent = ((1 - @book.sell_price.to_f/@book.book_price.to_f)*100).to_i
     # @replys = Reply.all
-
+    
     
   end
   
