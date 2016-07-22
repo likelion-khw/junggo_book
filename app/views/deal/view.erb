@@ -26,6 +26,7 @@
               <img src="<%= @book.image_url %>" style="max-width: 90%; height: auto;">
               
               <br>
+              <% if @book.status != "판매완료" %>
               <% if current_user%>
                 <button id="buy" value="<%=@book.status%>" class="grow_box btn-block font-hanna"><h3>구 입 하 기</h3></button>
                 
@@ -34,6 +35,7 @@
                 
               <%end%>
               (판매자와의 빠른 거래를 위해 사용자의 등록된 휴대폰 번호 정보가 담긴 문자가 전송됩니다.)
+              <%end%>
             </div>
 
             
@@ -130,7 +132,7 @@
             </div>
           </div>
           
-             
+          <% if @book.status != "판매완료" %>
              <table class="table" id="reply_table">
                 <thead>
                   <tr>
@@ -152,6 +154,7 @@
                <% end %>
               
                  <!--<form action="/deal/reply" method="POST">  -->
+                 
                     <tr>
                       <th colspan="2">
                         <% if current_user %>
@@ -175,12 +178,28 @@
                       </th>
                       
                     </tr>
+                    
                   <!--</form>-->
                 </tbody>
                
-               
-                
               </table>
+              <%else%>
+              <% @review.each do |p| %>
+              <% if @book.id == p.deal_id %>
+              <center>
+                
+              <span class="font-hanna"><h4>구매자 리뷰</h4></span>
+              
+              <span class="font-hanna">
+              <%=User.find(@book.buyer).nickname%>님 <br>
+              
+              내용 : <%= p.review %><br>
+              평점 : <%= p.star %>
+              </span>
+              </center>
+              <%end%>
+              <%end%>
+             <%end%>
              
         </div>
       </div>
@@ -225,7 +244,6 @@ $(document).ready(function() {
 });
   
   
-  
  
     $(".reply_submit").click(function() {
       user_nickname = $("#user_nickname").val();
@@ -256,6 +274,7 @@ $(document).ready(function() {
     })  
     
 });
+
 </script>
 <%end%>
 
@@ -309,7 +328,7 @@ $(document).ready(function() {
                       <img class="media-object" src="<%=book.image_url%>" style="float:left;padding-right:20px" width="120" height="120">
                   </div>
                   <div class="col-xs-12 col-sm-7">
-                      <a href="/deal/view/%=book.id%>">
+                      <a href="/deal/view/<%=book.id%>">
                         <b><h4 class="media-heading">[<%=book.book_category%>] <%=book.book_title%> </h4>
                       </a>
             					판매가: <%=book.sell_price%>원 (정가대비 <%=@percent%>% 할인)<br>
